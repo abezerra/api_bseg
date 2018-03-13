@@ -12,5 +12,12 @@
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('tokens');
 });
+
+Auth::routes();
+
+Route::get('/home', 'HomeController@index')->name('home');
+
+Route::get('/security', 'SecurityController@index')->name('security');
+Route::get('/callback', 'SecurityController@callback')->name('callback');

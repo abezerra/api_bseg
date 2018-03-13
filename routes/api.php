@@ -17,6 +17,8 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 
+Route::get('dp', 'DepartamentsController@index')->middleware('auth:api');
+
 Route::group(['middleware' => ['cors']], function () {
     Route::post('authenticate', 'AuthController@authenticate');
 //    Route::group ( [ 'middleware' => [ 'auth.check' ] ] , function () {

@@ -153,6 +153,9 @@ return [
 
         Tymon\JWTAuth\Providers\JWTAuthServiceProvider::class,
 
+        //passport
+        Laravel\Passport\PassportServiceProvider::class,
+
 
         /*
          * Application Service Providers...
