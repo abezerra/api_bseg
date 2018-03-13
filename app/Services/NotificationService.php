@@ -138,4 +138,9 @@ class NotificationService
         $this->mailerService->create($data);
         return $this->repository->create($data);
     }
+
+    public function push_notification()
+    {
+
+    }
 }
