@@ -11,5 +11,8 @@ namespace App\Traits;
 
 trait MyInsurance
 {
-
+    public function my_insurance($repository)
+    {
+        //return $this->
+    }
 }

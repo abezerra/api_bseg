@@ -38,7 +38,7 @@ class IndividualInsuranceService
     public function __construct(IndividualLifeInsuranceRepository $repository,
                                 IndividualLifeInsuranceValidator $validator,
                                 ClientService $clientService,
-                                CoverageService $coverageService,
+                                LifeCoreverageService $coverageService,
                                 NotificationService $notificationService)
     {
         $this->repository = $repository;
@@ -82,7 +82,7 @@ class IndividualInsuranceService
             return [
                 'code' => 200,
                 'action' => $save,
-                'message' => 'Auto Insurer has been created'
+                'message' => 'Life Insurer has been created'
             ];
         }
         catch (ValidationException $exception)

@@ -133,6 +133,9 @@ Route::group(['middleware' => ['cors']], function () {
         Route::delete('/{id}', 'FiendsController@destroy');
     });
 
-//    });
+    Route::group(['prefix' => 'insured'], function () {
+        Route::get('/{id}', 'IsuredController@my_insurances');
+    });
+
 });
 

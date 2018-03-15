@@ -8,7 +8,6 @@
 
 namespace App\Services;
 
-
 use App\Repositories\ResidentialInsuranceRepository;
 use App\Validators\ResidentialInsuranceValidator;
 
@@ -38,7 +37,7 @@ class ResidentialInsuranceService
     public function __construct(ResidentialInsuranceRepository $repository,
                                 ResidentialInsuranceValidator $validator,
                                 ClientService $clientService,
-                                CoverageService $coverageService,
+                                ResidentialCoverageService $coverageService,
                                 NotificationService $notificationService)
     {
         $this->repository = $repository;
