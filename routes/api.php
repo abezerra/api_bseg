@@ -137,5 +137,7 @@ Route::group(['middleware' => ['cors']], function () {
         Route::get('/{id}', 'IsuredController@my_insurances');
     });
 
+    Route::get('push', 'InsurersController@send_push');
+
 });
 

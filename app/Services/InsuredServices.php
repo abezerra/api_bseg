@@ -50,6 +50,9 @@ class InsuredServices
         return [
           'auto' => $this->autoInsurerService->my_insurance($id),
           'residential' => $this->residentialInsuranceService->my_insurance($id),
+          'eo' => $this->EOInsuranceService->my_insurance($id),
+          'life' => $this->individualInsuranceService->my_insurance($id),
+          'lease' => $this->boundInsuranceService->my_insurance($id),
         ];
     }
 }

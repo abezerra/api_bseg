@@ -12,7 +12,7 @@
 */
 
 Route::get('/', function () {
-    return view('tokens');
+    return view('welcome');
 });
 
 Auth::routes();
@@ -21,3 +21,7 @@ Route::get('/home', 'HomeController@index')->name('home');
 
 Route::get('/security', 'SecurityController@index')->name('security');
 Route::get('/callback', 'SecurityController@callback')->name('callback');
+Route::get('test', function () {
+    event(new App\Events\StatusLiked('Someone'));
+    return "enviado";
+});

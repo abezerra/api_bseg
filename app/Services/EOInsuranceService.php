@@ -135,4 +135,9 @@ class EOInsuranceService
             'message' => 'EO Insurer been deleted'
         ];
     }
+
+    public function my_insurance($id)
+    {
+        return $this->repository->with(['client', 'coverage'])->findByField('client_id', $id);
+    }
 }

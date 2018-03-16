@@ -129,4 +129,9 @@ class IndividualInsuranceService
             'message' => 'Individual Insurance been deleted'
         ];
     }
+
+    public function my_insurance($id)
+    {
+        return $this->repository->with(['client', 'coverage'])->findByField('client_id', $id);
+    }
 }

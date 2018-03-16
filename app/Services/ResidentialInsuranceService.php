@@ -128,4 +128,9 @@ class ResidentialInsuranceService
             'message' => 'Auto Insurer been deleted'
         ];
     }
+
+    public function my_insurance($id)
+    {
+        return $this->repository->with(['client', 'coverage'])->findByField('client_id', $id);
+    }
 }
