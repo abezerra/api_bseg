@@ -1,0 +1,1 @@
+@extends('layouts.app')@section('content')<br /><h1>Brasal Labs</h1><br /> <p>Wellcome to Test Raphael</p> <br /><img src='{{URL::asset('/images/1521546548.c36bbd258b7ee694eb987221b2b197b0')}}' alt='Imagem anexada'@endsection

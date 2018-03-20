@@ -7,6 +7,7 @@ use App\Services\AlertsService;
 use App\Http\Requests\AlertCreateRequest;
 use App\Http\Requests\AlertUpdateRequest;
 use Illuminate\Http\Request;
+use phpDocumentor\Reflection\Types\This;
 
 
 /**
@@ -90,4 +91,5 @@ class AlertsController extends Controller
     {
         return $this->service->destroy($id);
     }
+    
 }

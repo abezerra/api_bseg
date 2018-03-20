@@ -139,5 +139,8 @@ Route::group(['middleware' => ['cors']], function () {
 
     Route::get('push', 'InsurersController@send_push');
 
+    Route::post( 'templating', 'TemplatingsController@create_templates');
+    Route::post( 'image', 'TemplatingsController@image_templating');
+
 });
 

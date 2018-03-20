@@ -46,6 +46,7 @@ class RepositoryServiceProvider extends ServiceProvider
         $this->app->bind(\App\Repositories\EOCoverageRepository::class, \App\Repositories\EOCoverageRepositoryEloquent::class);
         $this->app->bind(\App\Repositories\LifeCoverageRepository::class, \App\Repositories\LifeCoverageRepositoryEloquent::class);
         $this->app->bind(\App\Repositories\LeaseBoundCoverageRepository::class, \App\Repositories\LeaseBoundCoverageRepositoryEloquent::class);
+        $this->app->bind(\App\Repositories\TemplatingRepository::class, \App\Repositories\TemplatingRepositoryEloquent::class);
         //:end-bindings:
     }
 }
