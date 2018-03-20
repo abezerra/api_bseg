@@ -247,25 +247,14 @@ class TemplatingsController extends Controller
 
         $img = Image::make( public_path('images/'. $imageName));
 
-//        $img->text('Fulano de Talco - Corretor', 450, 850, function($font) {
-//
-//            $font->file(public_path('fonts/bar.ttf'));
-//            $font->file(5);
-//
-//            $font->color('#FA4659');
-//            $font->align('center');
-//            $font->valign('bottom');
-//            //dd($font);
-//        });
-
-        $img->text('foo', 0, 0, function($font) {
-            $font->file('foo/bar.ttf');
-            $font->size(24);
-            $font->color('#fdf6e3');
+        $img->text('Alsene Beserra - 3035 6663 -  Gestor de Negocios', 450, 850, function($font) {
+            $font->file(public_path('fonts/bar.ttf'));
+            $font->size(26);
+            $font->color('#000');
             $font->align('center');
             $font->valign('top');
-            $font->angle(45);
         });
-        $img->save(public_path('images/_.jpg'));
+
+        $img->save(public_path('images/x.jpg'));
     }
 }
