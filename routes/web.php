@@ -23,7 +23,7 @@ Route::get('/', function () {
     return redirect("http://127.0.0.1:8000/oauth/authorize?$query");
 });
 
-//Auth::routes();
+Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
 

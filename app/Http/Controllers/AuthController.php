@@ -12,6 +12,7 @@ class AuthController extends Controller
 
     public function auth(Request $request)
     {
+
         $credentials = $request->only('email', 'password');
 
         try
@@ -23,9 +24,10 @@ class AuthController extends Controller
                 return response()->json(['success' => $success], 200);
             }
         } catch (\Exception $exception) {
-            // something went wrong whilst attempting to encode the token
             return response()->json(['error' => 'Unauthrized', 'cause' => $exception], 500);
         }
+
+        return response()->json(['error' => 'Unauthrized'], 401);
 
     }
 
