@@ -241,20 +241,24 @@ class TemplatingsController extends Controller
 
     public function image_templating(Request $request)
     {
+        $data =  $request->all();
 
         $imageName = md5(time()).'.'. request()->image->getClientOriginalExtension();
         request()->image->move(public_path('images'), $imageName);
 
         $img = Image::make( public_path('images/'. $imageName));
 
-        $img->text('Alsene Beserra - 3035 6663 -  Gestor de Negocios', 450, 850, function($font) {
+        $img->text($data['message'], 450, 850, function($font) {
             $font->file(public_path('fonts/bar.ttf'));
             $font->size(26);
-            $font->color('#000');
+            $font->color('#8A1253');
             $font->align('center');
             $font->valign('top');
         });
 
-        $img->save(public_path('images/x.jpg'));
+        $img->save(public_path('images/' . $imageName));
+        return [
+            'path' => 'http://laravel.test/images/' . $imageName
+        ];
     }
 }
