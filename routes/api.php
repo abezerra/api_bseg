@@ -107,7 +107,6 @@ Route::group(['middleware' => ['cors']], function () {
     //broker
     Route::group(['prefix' => 'broker'], function () {
         Route::get('', 'BrokersController@index');
-        Route::get('/my/{id}', 'BrokersController@my_alerts');
         Route::post('', 'BrokersController@store');
         Route::get('/{id}', 'BrokersController@show');
         Route::put('/{id}', 'BrokersController@update');

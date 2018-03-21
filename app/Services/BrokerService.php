@@ -31,7 +31,7 @@ class BrokerService
 
     public function index()
     {
-        return $this->repository->with(['departament'])->all();
+        return response()->json($this->repository->with(['departament'])->all());
     }
 
     public function store(array $data)
