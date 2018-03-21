@@ -45,7 +45,7 @@ class IndividualLifeInsurance extends Model implements Transformable
 
     public function coverage()
     {
-        return $this->belongsTo(Coverage::class, 'coverage_id');
+        return $this->hasMany(LifeCoverage::class, 'insurer_id');
     }
 
 }

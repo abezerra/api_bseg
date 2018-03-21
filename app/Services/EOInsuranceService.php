@@ -36,10 +36,18 @@ class EOInsuranceService
      */
     private $notificationService;
 
+    /**
+     * EOInsuranceService constructor.
+     * @param EOInsuranceRepository $repository
+     * @param EOInsuranceValidator $validator
+     * @param ClientService $clientService
+     * @param EOCoverageService $coverageService
+     * @param NotificationService $notificationService
+     */
     public function __construct(EOInsuranceRepository $repository,
                                 EOInsuranceValidator $validator,
                                 ClientService $clientService,
-                                CoverageService $coverageService,
+                                EOCoverageService $coverageService,
                                 NotificationService $notificationService)
     {
         $this->repository = $repository;
@@ -80,7 +88,7 @@ class EOInsuranceService
             return [
                 'code' => 200,
                 'action' => $save,
-                'message' => 'Auto Insurer has been created'
+                'message' => 'EO Insurer has been created'
             ];
         }
         catch (ValidationException $exception)
@@ -126,5 +134,10 @@ class EOInsuranceService
             'action' => $this->repository->delete($id),
             'message' => 'EO Insurer been deleted'
         ];
+    }
+
+    public function my_insurance($id)
+    {
+        return $this->repository->with(['client', 'coverage'])->findByField('client_id', $id);
     }
 }

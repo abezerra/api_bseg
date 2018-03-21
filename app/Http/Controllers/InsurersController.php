@@ -12,6 +12,7 @@ use App\Http\Requests\InsurerCreateRequest;
 use App\Http\Requests\InsurerUpdateRequest;
 use App\Repositories\InsurerRepository;
 use App\Validators\InsurerValidator;
+use Pusher\Pusher;
 
 /**
  * Class InsurersController.
@@ -93,5 +94,21 @@ class InsurersController extends Controller
     public function destroy($id)
     {
         return $this->service->destroy($id);
+    }
+
+    public function send_push()
+    {
+        $options = array(
+            'cluster' => 'us2',
+            'encrypted' => true
+        );
+        $pusher = new Pusher(
+            'b1c9dfd0226ff506116d',
+            'b5489d77641c1e4d77fb',
+            '491393',
+            $options
+        );
+        $data['message'] = 'hail farofa';
+        return $pusher->trigger('my-channel', 'event', $data);
     }
 }

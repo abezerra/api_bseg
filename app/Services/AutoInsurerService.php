@@ -133,4 +133,13 @@ class AutoInsurerService
             'message' => 'Auto Insurer been deleted'
         ];
     }
+
+    /**
+     * @param $id
+     * @return return auto insurance client searched of id
+     */
+    public function my_insurance($id)
+    {
+        return $this->repository->with(['client', 'coverage'])->findByField('client_id', $id);
+    }
 }

@@ -19,13 +19,14 @@ class CheckRole
 
         if(!Auth::check ())
         {
-            //return redirect ('/api/authenticate');
-            return response()->json([
-                'code' => 401,
-                'error' => 'unauthorized',
-                'message' => 'unauthorized access'
-            ],
-                401);
+//            return redirect ('/api/authenticate');
+//            return response()->json([
+//                'code' => 401,
+//                'error' => 'unauthorized',
+//                'message' => 'unauthorized access'
+//            ],
+//                401);
+
         }
         return $next($request);
     }

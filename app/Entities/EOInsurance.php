@@ -47,6 +47,6 @@ class EOInsurance extends Model implements Transformable
 
     public function coverage()
     {
-        return $this->belongsTo(Coverage::class, 'coverage_id');
+        return $this->hasMany(EOCoverage::class, 'insurer_id');
     }
 }

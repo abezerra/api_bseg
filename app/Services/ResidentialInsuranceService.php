@@ -8,7 +8,6 @@
 
 namespace App\Services;
 
-
 use App\Repositories\ResidentialInsuranceRepository;
 use App\Validators\ResidentialInsuranceValidator;
 
@@ -38,7 +37,7 @@ class ResidentialInsuranceService
     public function __construct(ResidentialInsuranceRepository $repository,
                                 ResidentialInsuranceValidator $validator,
                                 ClientService $clientService,
-                                CoverageService $coverageService,
+                                ResidentialCoverageService $coverageService,
                                 NotificationService $notificationService)
     {
         $this->repository = $repository;
@@ -128,5 +127,10 @@ class ResidentialInsuranceService
             'action' => $this->repository->delete($id),
             'message' => 'Auto Insurer been deleted'
         ];
+    }
+
+    public function my_insurance($id)
+    {
+        return $this->repository->with(['client', 'coverage'])->findByField('client_id', $id);
     }
 }

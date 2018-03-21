@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Services\SmsService;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
@@ -20,25 +21,13 @@ use App\Validators\SmsValidator;
 class SmsController extends Controller
 {
     /**
-     * @var SmsRepository
+     * @var SmsService
      */
-    protected $repository;
+    private $service;
 
-    /**
-     * @var SmsValidator
-     */
-    protected $validator;
-
-    /**
-     * SmsController constructor.
-     *
-     * @param SmsRepository $repository
-     * @param SmsValidator $validator
-     */
-    public function __construct(SmsRepository $repository, SmsValidator $validator)
+    public function __construct(SmsService $service)
     {
-        $this->repository = $repository;
-        $this->validator  = $validator;
+        $this->service = $service;
     }
 
     /**
@@ -48,17 +37,7 @@ class SmsController extends Controller
      */
     public function index()
     {
-        $this->repository->pushCriteria(app('Prettus\Repository\Criteria\RequestCriteria'));
-        $sms = $this->repository->all();
-
-        if (request()->wantsJson()) {
-
-            return response()->json([
-                'data' => $sms,
-            ]);
-        }
-
-        return view('sms.index', compact('sms'));
+       return $this->service->index();
     }
 
     /**
@@ -70,35 +49,9 @@ class SmsController extends Controller
      *
      * @throws \Prettus\Validator\Exceptions\ValidatorException
      */
-    public function store(SmsCreateRequest $request)
+    public function store(Request $request)
     {
-        try {
-
-            $this->validator->with($request->all())->passesOrFail(ValidatorInterface::RULE_CREATE);
-
-            $sm = $this->repository->create($request->all());
-
-            $response = [
-                'message' => 'Sms created.',
-                'data'    => $sm->toArray(),
-            ];
-
-            if ($request->wantsJson()) {
-
-                return response()->json($response);
-            }
-
-            return redirect()->back()->with('message', $response['message']);
-        } catch (ValidatorException $e) {
-            if ($request->wantsJson()) {
-                return response()->json([
-                    'error'   => true,
-                    'message' => $e->getMessageBag()
-                ]);
-            }
-
-            return redirect()->back()->withErrors($e->getMessageBag())->withInput();
-        }
+        return $this->service->store($request->all());
     }
 
     /**
