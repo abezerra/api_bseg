@@ -17,6 +17,7 @@ class CreateLeaseBoundInsurancesTable extends Migration
 	{
 		Schema::create('lease_bound_insurances', function(Blueprint $table) {
             $table->increments('id');
+            $table->string('cpf')->nullable();
             $table->string('insurer')->nullable();
             $table->string('apoliceNumber')->nullable();
             $table->string('validity')->nullable();

@@ -22,6 +22,7 @@ class EOInsurance extends Model implements Transformable
      */
     protected $fillable = [
         'id',
+        'cpf',
         'insurer',
         'apoliceNumber',
         'validity',

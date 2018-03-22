@@ -25,9 +25,9 @@ class IsuredController extends Controller
         $this->services = $services;
     }
 
-    public function my_insurances($id)
+    public function my_insurances($cpf)
     {
-        return $this->services->my_insurances($id);
+        return $this->services->my_insurances($cpf);
     }
 
     public function my_invoices()

@@ -45,14 +45,14 @@ class InsuredServices
         $this->boundInsuranceService = $boundInsuranceService;
     }
 
-    public function my_insurances($id)
+    public function my_insurances($cpf)
     {
         return [
-          'auto' => $this->autoInsurerService->my_insurance($id),
-          'residential' => $this->residentialInsuranceService->my_insurance($id),
-          'eo' => $this->EOInsuranceService->my_insurance($id),
-          'life' => $this->individualInsuranceService->my_insurance($id),
-          'lease' => $this->boundInsuranceService->my_insurance($id),
+          'auto' => $this->autoInsurerService->my_insurance($cpf),
+          'residential' => $this->residentialInsuranceService->my_insurance($cpf),
+          'eo' => $this->EOInsuranceService->my_insurance($cpf),
+          'life' => $this->individualInsuranceService->my_insurance($cpf),
+          'lease' => $this->boundInsuranceService->my_insurance($cpf),
         ];
     }
 }

@@ -129,8 +129,8 @@ class ResidentialInsuranceService
         ];
     }
 
-    public function my_insurance($id)
+    public function my_insurance($cpf)
     {
-        return $this->repository->with(['client', 'coverage'])->findByField('client_id', $id);
+        return $this->repository->with(['client', 'coverage'])->findByField('cpf', $cpf);
     }
 }

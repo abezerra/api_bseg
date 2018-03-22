@@ -19,6 +19,7 @@ class CreateAutoInsurancesTable extends Migration
             $table->increments('id');
             $table->string('insurer')->nullable();
             $table->string('apoliceNumber')->nullable();
+            $table->string('cpf')->nullable();
             $table->string('validity')->nullable();
             $table->string('classification')->nullable();
             $table->string('input')->nullable();
