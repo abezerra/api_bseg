@@ -26,12 +26,10 @@ Route::group(['middleware' => ['cors']], function () {
         Route::get('/user', function (Request $request) {
             return $request->user();
         });
-//        Route::get('users', 'UsersController@index');
-//        Route::get('details', 'AuthController@details');
-//
+
+        Route::get('details/{cpf}', 'AuthController@details');
 //        Route::get('user_responsible_of_news_clients', 'UsersController@user_responsible_of_news_clients');
 //        Route::post('user_add', 'UsersController@create_new');
-//
 //        Route::get('notification', 'NotificationsController@index');
 
         Route::group(['prefix' => 'clients'], function () {
@@ -55,7 +53,7 @@ Route::group(['middleware' => ['cors']], function () {
 
 
         Route::group(['prefix' => 'notifications'], function () {
-            Route::get('', 'ClientsController@index');
+            Route::get('/{cpf}', 'NotificationsController@index');
             Route::get('/client', 'ClientsController@client');
             Route::get('/leads', 'ClientsController@lead');
             Route::post('/sms', 'SmsController@store');

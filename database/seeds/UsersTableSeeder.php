@@ -18,7 +18,7 @@ class UsersTableSeeder extends Seeder
             'email' => 'manager@bseg.com',
             'password' => bcrypt(123456),
             'role' => 'manager',
-            'cpf' => rand(1, 999) . rand(1, 999) . rand(1, 999) . rand(1, 99),
+            'cpf' => '03676459393',
             'remember_token' => str_random(10)]);
 
 

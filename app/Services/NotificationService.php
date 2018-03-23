@@ -11,6 +11,7 @@ namespace App\Services;
 
 use App\Repositories\NotificationRepository;
 use App\Validators\NotificationValidator;
+use Dotenv\Exception\ValidationException;
 
 class NotificationService
 {
@@ -43,9 +44,9 @@ class NotificationService
         $this->mailerService = $mailerService;
     }
 
-    public function index()
+    public function index($id)
     {
-        return $this->repository->paginate(5);
+        return $this->repository->findWhere(['user_id' => $id, 'status' => '0']);
     }
 
     public function store(array $data)
