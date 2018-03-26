@@ -140,6 +140,16 @@ class NotificationService
         return $this->repository->create($data);
     }
 
+    public function notify_invitation_friendly(array $data)
+    {
+        $this->mailerService->invite_fliendly($data);
+        $notification = [
+            'message' => $data['name'].' Foi indicado',
+            'user_id' => 17,
+        ];
+        return $this->repository->create($notification);
+    }
+
     public function push_notification()
     {
 

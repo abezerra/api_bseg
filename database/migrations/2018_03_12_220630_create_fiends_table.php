@@ -17,9 +17,10 @@ class CreateFiendsTable extends Migration
 	{
 		Schema::create('fiends', function(Blueprint $table) {
             $table->increments('id');
-            $table->string('nome');
-            $table->string('email');
-            $table->string('telefone');
+            $table->string('name')->nullable();
+            $table->string('email')->nullable();
+            $table->string('phone')->nullable();
+            $table->longText('message')->nullable();
             $table->timestamps();
 		});
 	}

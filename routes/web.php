@@ -34,6 +34,5 @@ Route::get('test', function () {
     return "enviado";
 });
 
-Route::get('callback', function() {
-});
+Route::get('callback', function() {});
 

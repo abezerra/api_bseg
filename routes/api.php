@@ -28,6 +28,7 @@ Route::group(['middleware' => ['cors']], function () {
         });
 
         Route::get('details/{cpf}', 'AuthController@details');
+        Route::post('invite', 'FiendsController@invite');
 //        Route::get('user_responsible_of_news_clients', 'UsersController@user_responsible_of_news_clients');
 //        Route::post('user_add', 'UsersController@create_new');
 //        Route::get('notification', 'NotificationsController@index');
