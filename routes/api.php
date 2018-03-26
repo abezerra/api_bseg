@@ -157,6 +157,18 @@ Route::group(['middleware' => ['cors']], function () {
         Route::post('templating', 'TemplatingsController@create_templates');
         Route::post('image', 'TemplatingsController@image_templating');
 
+        //broker
+        Route::group(['prefix' => 'messages'], function () {
+            Route::get('', 'MessagesController@index');
+            Route::get('/my_messages/{id}', 'MessagesController@my_messages');
+            Route::post('', 'MessagesController@store');
+            Route::get('/{id}', 'MessagesController@show');
+            Route::put('/{id}', 'MessagesController@update');
+            Route::post('reply/{id}', 'MessageRepliesController@store');
+            Route::post('my_reply/{id}', 'MessageRepliesController@store');
+            Route::delete('/{id}', 'MessagesController@destroy');
+        });
+
     });
 });
 
