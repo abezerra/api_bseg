@@ -11,6 +11,7 @@ namespace App\Services;
 use App\Repositories\MessageRepository;
 use App\Validators\MessageValidator;
 use Dotenv\Exception\ValidationException;
+use Illuminate\Support\Facades\Log;
 
 class MessageService
 {
@@ -38,7 +39,8 @@ class MessageService
     {
         try
         {
-            return response()->json(['success' => $this->repository->create($data)], 200);
+            $message = $this->repository->create($data);
+            return response()->json(['a porra do maldito sucesso' => $message], 200);
         }
         catch (ValidationException $exception)
         {

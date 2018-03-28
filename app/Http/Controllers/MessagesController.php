@@ -2,16 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Entities\Message;
 use App\Services\MessageService;
 use Illuminate\Http\Request;
-
-use App\Http\Requests;
-use Prettus\Validator\Contracts\ValidatorInterface;
-use Prettus\Validator\Exceptions\ValidatorException;
 use App\Http\Requests\MessageCreateRequest;
-use App\Http\Requests\MessageUpdateRequest;
 use App\Repositories\MessageRepository;
-use App\Validators\MessageValidator;
 
 /**
  * Class MessagesController.
@@ -25,10 +20,15 @@ class MessagesController extends Controller
      * @var MessageService
      */
     private $service;
+    /**
+     * @var MessageRepository
+     */
+    private $repository;
 
-    public function __construct(MessageService $service)
+    public function __construct(MessageService $service, MessageRepository $repository)
     {
         $this->service = $service;
+        $this->repository = $repository;
     }
 
     /**
@@ -50,9 +50,10 @@ class MessagesController extends Controller
      *
      * @throws \Prettus\Validator\Exceptions\ValidatorException
      */
-    public function store(MessageCreateRequest $request)
+    public function store(Request $request)
     {
-        return $this->service->store($request->all());
+        return $this->repository->create($request->all());
+        //return response()->json(['a porra do maldito sucesso' => $message], 200);
     }
 
     /**
@@ -83,6 +84,9 @@ class MessagesController extends Controller
 
     public function my_messages($id)
     {
-        return $this->service->my_messages($id);
+        return Message::with(['users', 'replies'])
+            ->where('user_id', '=', $id)
+            ->get(['id', 'message', 'subject', 'user_id', 'phone'])
+            ->last();
     }
 }
