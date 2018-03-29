@@ -21,7 +21,7 @@ Route::group(['middleware' => ['cors']], function () {
     Route::post('authenticate', 'AuthController@auth');
     Route::get('authenticateds', 'AuthController@getAuthenticatedUser');
 
-    Route::group(['middleware' => ['auth:api']], function () {
+    //Route::group(['middleware' => ['auth:api']], function () {
 
         Route::get('/user', function (Request $request) {
             return $request->user();
@@ -169,6 +169,6 @@ Route::group(['middleware' => ['cors']], function () {
             Route::delete('/{id}', 'MessagesController@destroy');
         });
 
-    });
+    //});
 });
 

@@ -61,4 +61,9 @@ class User extends Authenticatable
     {
         return $this->hasMany(MessageReply::class, 'replyer_id');
     }
+
+    public function templates()
+    {
+        return $this->hasMany(Templating::class, 'user_id');
+    }
 }

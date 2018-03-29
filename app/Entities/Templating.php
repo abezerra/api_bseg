@@ -20,6 +20,16 @@ class Templating extends Model implements Transformable
      *
      * @var array
      */
-    protected $fillable = [];
+    protected $fillable = [
+        'name',
+        'phone',
+        'media_name',
+        'user_id'
+    ];
+
+    public function users()
+    {
+        return $this->belongsTo(User::class, 'user_id');
+    }
 
 }

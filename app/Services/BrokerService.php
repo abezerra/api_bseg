@@ -38,7 +38,6 @@ class BrokerService
     {
         try {
             $this->validator->with($data)->passesOrFail();
-
             return response()->json(
                 ['action' => $this->repository->create($data),
                     'message' => 'Borker has been created'

@@ -2,9 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Entities\Templating;
+use function foo\func;
 use Illuminate\Http\Request;
 
-use App\Http\Requests;
 use Intervention\Image\Facades\Image;
 use Prettus\Validator\Contracts\ValidatorInterface;
 use Prettus\Validator\Exceptions\ValidatorException;
@@ -39,7 +40,7 @@ class TemplatingsController extends Controller
     public function __construct(TemplatingRepository $repository, TemplatingValidator $validator)
     {
         $this->repository = $repository;
-        $this->validator  = $validator;
+        $this->validator = $validator;
     }
 
     /**
@@ -81,7 +82,7 @@ class TemplatingsController extends Controller
 
             $response = [
                 'message' => 'Templating created.',
-                'data'    => $templating->toArray(),
+                'data' => $templating->toArray(),
             ];
 
             if ($request->wantsJson()) {
@@ -93,7 +94,7 @@ class TemplatingsController extends Controller
         } catch (ValidatorException $e) {
             if ($request->wantsJson()) {
                 return response()->json([
-                    'error'   => true,
+                    'error' => true,
                     'message' => $e->getMessageBag()
                 ]);
             }
@@ -141,7 +142,7 @@ class TemplatingsController extends Controller
      * Update the specified resource in storage.
      *
      * @param  TemplatingUpdateRequest $request
-     * @param  string            $id
+     * @param  string $id
      *
      * @return Response
      *
@@ -157,7 +158,7 @@ class TemplatingsController extends Controller
 
             $response = [
                 'message' => 'Templating updated.',
-                'data'    => $templating->toArray(),
+                'data' => $templating->toArray(),
             ];
 
             if ($request->wantsJson()) {
@@ -171,7 +172,7 @@ class TemplatingsController extends Controller
             if ($request->wantsJson()) {
 
                 return response()->json([
-                    'error'   => true,
+                    'error' => true,
                     'message' => $e->getMessageBag()
                 ]);
             }
@@ -207,7 +208,7 @@ class TemplatingsController extends Controller
     {
         $data = $request->all();
 
-        $template = fopen( resource_path( 'views/' . $data['file_name'] . '.blade.php' ), 'w' )or die("Não deu para ler a piriquita do arquivo!");
+        $template = fopen(resource_path('views/' . $data['file_name'] . '.blade.php'), 'w') or die("Não deu para ler a piriquita do arquivo!");
 
         //define the extends email
         $extends = "@extends('layouts.app')";
@@ -222,43 +223,46 @@ class TemplatingsController extends Controller
         fwrite($template, $title);
 
         $wellcome_message = 'Wellcome to Test';
-        $message_to_client = '<p>' . $wellcome_message . ' ' . $data['client_name'] . '</p>'. " <br />";
+        $message_to_client = '<p>' . $wellcome_message . ' ' . $data['client_name'] . '</p>' . " <br />";
         fwrite($template, $message_to_client);
 
         //images
-        $imageName = md5(time()).'.'. request()->image->getClientOriginalExtension();
+        $imageName = md5(time()) . '.' . request()->image->getClientOriginalExtension();
         request()->image->move(public_path('images'), $imageName);
 
-        $template_image = "<img src='{{URL::asset('/images/". $imageName . "')}}' alt='Imagem anexada'";
+        $template_image = "<img src='{{URL::asset('/images/" . $imageName . "')}}' alt='Imagem anexada'";
         fwrite($template, $template_image);
 
 
         //define end of content of email body
         $end_body = "@endsection";
         fwrite($template, $end_body);
-        return view(  $data['file_name']   );
+        return view($data['file_name']);
     }
 
     public function image_templating(Request $request)
     {
-        $data =  $request->all();
+        $data = $request->all();
 
-        $imageName = md5(time()).'.'. request()->image->getClientOriginalExtension();
-        request()->image->move(public_path('images'), $imageName);
-
-        $img = Image::make( public_path('images/'. $imageName));
-
-        $img->text($data['message'], 450, 850, function($font) {
+        $img = Image::make(public_path('images/default.jpg'));
+        $img->text($data['name'] . ' - ' . $data['phone'], 450, 850, function ($font) {
             $font->file(public_path('fonts/bar.ttf'));
             $font->size(26);
             $font->color('#8A1253');
             $font->align('center');
             $font->valign('top');
         });
+        $imageName = md5('brasalimg') . '.jpg';
+        $img->save(public_path('img/' . $imageName));
 
-        $img->save(public_path('images/' . $imageName));
+        $data['media_name'] = "http://laravel.test/img/{$imageName}";
+        $data['user_id'] = 11;
+
+        //dd($data);
+
         return [
-            'path' => 'http://laravel.test/images/' . $imageName
+            'path' => 'http://laravel.test/img/' . $imageName
         ];
+
     }
 }
