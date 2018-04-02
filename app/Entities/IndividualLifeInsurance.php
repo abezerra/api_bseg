@@ -22,6 +22,7 @@ class IndividualLifeInsurance extends Model implements Transformable
      */
     protected $fillable = [
         'insurer',
+        'cpf',
         'apoliceNumber',
         'validity',
         'accession',

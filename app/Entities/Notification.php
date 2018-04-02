@@ -22,7 +22,8 @@ class Notification extends Model implements Transformable
      */
     protected $fillable = [
         'message',
-        'user_id'
+        'user_id',
+        'status',
     ];
 
     public function user()

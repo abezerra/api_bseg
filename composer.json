@@ -11,6 +11,7 @@
         "fideloper/proxy": "~4.0",
         "imagine/imagine": "^0.7.1",
         "intervention/image": "^2.4",
+        "intervention/imagecache": "^2.3",
         "laravel/framework": "5.6.*",
         "laravel/passport": "^5.0",
         "laravel/tinker": "~1.0",

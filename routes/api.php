@@ -21,17 +21,16 @@ Route::group(['middleware' => ['cors']], function () {
     Route::post('authenticate', 'AuthController@auth');
     Route::get('authenticateds', 'AuthController@getAuthenticatedUser');
 
-    Route::group(['middleware' => ['auth:api']], function () {
+    //Route::group(['middleware' => ['auth:api']], function () {
 
         Route::get('/user', function (Request $request) {
             return $request->user();
         });
-//        Route::get('users', 'UsersController@index');
-//        Route::get('details', 'AuthController@details');
-//
+
+        Route::get('details/{cpf}', 'AuthController@details');
+        Route::post('invite', 'FiendsController@invite');
 //        Route::get('user_responsible_of_news_clients', 'UsersController@user_responsible_of_news_clients');
 //        Route::post('user_add', 'UsersController@create_new');
-//
 //        Route::get('notification', 'NotificationsController@index');
 
         Route::group(['prefix' => 'clients'], function () {
@@ -55,7 +54,7 @@ Route::group(['middleware' => ['cors']], function () {
 
 
         Route::group(['prefix' => 'notifications'], function () {
-            Route::get('', 'ClientsController@index');
+            Route::get('/{cpf}', 'NotificationsController@index');
             Route::get('/client', 'ClientsController@client');
             Route::get('/leads', 'ClientsController@lead');
             Route::post('/sms', 'SmsController@store');
@@ -158,6 +157,18 @@ Route::group(['middleware' => ['cors']], function () {
         Route::post('templating', 'TemplatingsController@create_templates');
         Route::post('image', 'TemplatingsController@image_templating');
 
-    });
+        //broker
+        Route::group(['prefix' => 'messages'], function () {
+            Route::get('', 'MessagesController@index');
+            Route::get('/my_messages/{id}', 'MessagesController@my_messages');
+            Route::post('', 'MessagesController@store');
+            Route::get('/{id}', 'MessagesController@show');
+            Route::put('/{id}', 'MessagesController@update');
+            Route::post('reply/{id}', 'MessageRepliesController@store');
+            Route::post('my_reply/{id}', 'MessageRepliesController@store');
+            Route::delete('/{id}', 'MessagesController@destroy');
+        });
+
+    //});
 });
 

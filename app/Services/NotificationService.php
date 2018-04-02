@@ -11,6 +11,7 @@ namespace App\Services;
 
 use App\Repositories\NotificationRepository;
 use App\Validators\NotificationValidator;
+use Dotenv\Exception\ValidationException;
 
 class NotificationService
 {
@@ -43,9 +44,9 @@ class NotificationService
         $this->mailerService = $mailerService;
     }
 
-    public function index()
+    public function index($id)
     {
-        return $this->repository->paginate(5);
+        return $this->repository->findWhere(['user_id' => $id, 'status' => '0']);
     }
 
     public function store(array $data)
@@ -137,6 +138,16 @@ class NotificationService
         //$this->smsService->store($data);
         $this->mailerService->create($data);
         return $this->repository->create($data);
+    }
+
+    public function notify_invitation_friendly(array $data)
+    {
+        $this->mailerService->invite_fliendly($data);
+        $notification = [
+            'message' => $data['name'].' Foi indicado',
+            'user_id' => 17,
+        ];
+        return $this->repository->create($notification);
     }
 
     public function push_notification()

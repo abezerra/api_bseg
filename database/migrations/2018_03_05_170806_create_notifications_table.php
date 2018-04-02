@@ -20,6 +20,7 @@ class CreateNotificationsTable extends Migration
             $table->string('message');
             $table->integer('user_id')->unsigned()->nullable();
             $table->foreign('user_id')->references('id')->on('users');
+            $table->string('status')->default('0');
             $table->timestamps();
 		});
 	}
