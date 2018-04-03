@@ -66,4 +66,9 @@ class User extends Authenticatable
     {
         return $this->hasMany(Templating::class, 'user_id');
     }
+
+    public function defaults()
+    {
+        return $this->hasMany(DefaultsTemplating::class, 'created_by');
+    }
 }

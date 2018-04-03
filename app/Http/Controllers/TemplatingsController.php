@@ -258,7 +258,13 @@ class TemplatingsController extends Controller
         $data['media_name'] = "http://laravel.test/img/{$imageName}";
         $data['user_id'] = 11;
 
-        //dd($data);
+
+//        Templating::create([
+//            'name' => $data['name'],
+//            'phone' => $data['phone'],
+//            'media_name' => $data['media_name'],
+//            'user_id' => $data['user_id']
+//        ]);
 
         return [
             'path' => 'http://laravel.test/img/' . $imageName
