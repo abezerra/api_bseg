@@ -118,16 +118,20 @@ Route::group(['middleware' => ['cors']], function () {
         Route::delete('/{id}', 'InsurersController@destroy');
     });
 
-    //broker
+
     Route::group(['prefix' => 'broker'], function () {
         Route::get('', 'BrokersController@index');
         Route::post('', 'BrokersController@store');
         Route::get('/{id}', 'BrokersController@show');
         Route::put('/{id}', 'BrokersController@update');
         Route::delete('/{id}', 'BrokersController@destroy');
+        //to departaments of broker
+        Route::get('/departament/{id}', 'DepartamentsController@show');
+        Route::put('/departament/{id}', 'DepartamentsController@update');
+        Route::delete('/departament/{id}', 'DepartamentsController@destroy');
     });
 
-    //broker
+
     Route::group(['prefix' => 'departaments'], function () {
         Route::get('', 'DepartamentsController@index');
         Route::get('/my/{id}', 'DepartamentsController@my_alerts');
@@ -137,7 +141,7 @@ Route::group(['middleware' => ['cors']], function () {
         Route::delete('/{id}', 'DepartamentsController@destroy');
     });
 
-    //broker
+
     Route::group(['prefix' => 'friend'], function () {
         Route::get('', 'FiendsController@index');
         Route::get('/my/{id}', 'FiendsController@my_alerts');
@@ -156,7 +160,7 @@ Route::group(['middleware' => ['cors']], function () {
     Route::post('templating', 'TemplatingsController@create_templates');
     Route::post('image', 'TemplatingsController@image_templating');
 
-    //broker
+
     Route::group(['prefix' => 'messages'], function () {
         Route::get('', 'MessagesController@index');
         Route::get('/my_messages/{id}', 'MessagesController@my_messages');
