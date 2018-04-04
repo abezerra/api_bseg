@@ -75,7 +75,7 @@ class DefaultsTemplatingsController extends Controller
 
 
             $data['media_name'] = $file_name;
-            $data['media_url'] = '127.0.0.1:8000/images/' . $file_name;
+            $data['media_url'] = 'http://127.0.0.1:8000/images/' . $file_name;
             $data['status'] = 'active';
             $data['created_by'] = 11;
 
@@ -117,16 +117,15 @@ class DefaultsTemplatingsController extends Controller
      *
      * @throws \Prettus\Validator\Exceptions\ValidatorException
      */
-    public function update(DefaultsTemplatingUpdateRequest $request, $id)
+    public function update($id)
     {
         try {
 
-            $this->validator->with($request->all())->passesOrFail(ValidatorInterface::RULE_UPDATE);
 
-            $defaultsTemplating = $this->repository->update($request->all(), $id);
-
+            $data['status'] = 'disabled';
+            $defaultsTemplating = $this->repository->update($data, $id);
             return response()->json([
-                'message' => 'DefaultsTemplating updated.',
+                'message' => 'DefaultsTemplating disabled',
                 'data' => $defaultsTemplating->toArray(),
             ]);
 
