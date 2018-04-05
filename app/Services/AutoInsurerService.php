@@ -11,6 +11,7 @@ namespace App\Services;
 
 use App\Repositories\AutoInsuranceRepository;
 use App\Validators\AutoInsuranceValidator;
+use Dotenv\Exception\ValidationException;
 use Illuminate\Support\Facades\DB;
 
 class AutoInsurerService
@@ -52,9 +53,6 @@ class AutoInsurerService
     public function index()
     {
         return $this->repository->with(['coverage', 'client'])->all();
-//        return DB::table('auto_insurances')
-//                    ->join('coverages', 'auto_insurances.id', '=', 'coverages.id')
-//                    ->get();
     }
 
     public function store(array $data)
@@ -72,17 +70,13 @@ class AutoInsurerService
                 }
             }
 
-            //save the policy data
             $save = $this->repository->create($data);
 
-
-            //save the coverage
             for ($i = 0; $i < count($data['coverageArray']); ++$i) {
                 $this->coverageService->store($data['coverageArray'][$i], $save['id']);
             }
 
-
-            $this->notificationService->notify_apolice_availability($data);
+            //$this->notificationService->notify_apolice_availability($data);
             return [
                 'code' => 200,
                 'action' => $save,

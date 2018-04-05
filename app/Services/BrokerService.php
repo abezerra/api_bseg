@@ -9,6 +9,7 @@
 namespace App\Services;
 
 
+use App\Entities\Broker;
 use App\Repositories\BrokerRepository;
 use App\Validators\BrokerValidator;
 
@@ -22,11 +23,17 @@ class BrokerService
      * @var BrokerValidator
      */
     private $validator;
+    /**
+     * @var DepartamentService
+     */
+    private $departamentService;
 
-    public function __construct(BrokerRepository $repository, BrokerValidator $validator)
+    public function __construct(BrokerRepository $repository, BrokerValidator $validator,
+                                DepartamentService $departamentService)
     {
         $this->repository = $repository;
         $this->validator = $validator;
+        $this->departamentService = $departamentService;
     }
 
     public function index()
@@ -38,8 +45,14 @@ class BrokerService
     {
         try {
             $this->validator->with($data)->passesOrFail();
+            $broker = $this->repository->create($data);
+
+            for ($i = 0; $i < count($data['departamentArray']); $i++) {
+                $this->departamentService->store($data['departamentArray'][$i], $broker['id']);
+            }
+
             return response()->json(
-                ['action' => $this->repository->create($data),
+                ['action' => $broker,
                     'message' => 'Borker has been created'
                 ], 200
             );
