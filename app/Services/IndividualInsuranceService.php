@@ -11,6 +11,7 @@ namespace App\Services;
 
 use App\Repositories\IndividualLifeInsuranceRepository;
 use App\Validators\IndividualLifeInsuranceValidator;
+use Dotenv\Exception\ValidationException;
 
 class IndividualInsuranceService
 {
@@ -69,11 +70,8 @@ class IndividualInsuranceService
                 }
             }
 
-            //save the policy data
             $save = $this->repository->create($data);
 
-
-            //save the coverage
             for ($i = 0; $i < count($data['coverageArray']); ++$i) {
                 $this->coverageService->store($data['coverageArray'][$i], $save['id']);
             }
