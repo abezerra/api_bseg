@@ -184,7 +184,7 @@ Route::group(['middleware' => ['cors']], function () {
         Route::get('all', 'DashboardController@all_insurances_of_dashboard');
         Route::get('is_active', 'DashboardController@is_active');
         Route::get('renew_over_the_next_thirty_days', 'DashboardController@renew_over_the_next_thirty_days');
-        Route::get('expireds', 'DashboardController@expireds');
+        Route::get('total_hired', 'DashboardController@total_hired');
     });
 
     //});

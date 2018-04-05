@@ -134,16 +134,57 @@ class DashboardController
             ->get()
             ->toArray();
 
+        $eo_is_expired = DB::table('e_o_insurances')
+            ->where('validity', '>', $start_monthly)
+            ->get()
+            ->toArray();
+
+        $lease_is_expired = DB::table('lease_bound_insurances')
+            ->where('validity', '>', $start_monthly)
+            ->get()
+            ->toArray();
+
+        $life_is_expired = DB::table('individual_life_insurances')
+            ->where('validity', '>', $start_monthly)
+            ->get()
+            ->toArray();
+
+        $residential_is_expired = DB::table('residential_insurances')
+            ->where('validity', '>', $start_monthly)
+            ->get()
+            ->toArray();
+
+        $auto_is_expired= count($auto_is_expired);
+        $eo_is_expired= count($eo_is_expired);
+        $lease_is_expired= count($lease_is_expired);
+        $life_is_expired= count($life_is_expired);
+        $residential_is_expired= count($residential_is_expired);
+
+
         return [
             'renew' => ($auto + $lease + $life + $eo + $residential),
-            'auto_is_expired' => $auto_is_expired
+            'insurances_expired' => ($auto_is_expired + $eo_is_expired + $lease_is_expired + $life_is_expired + $residential_is_expired),
         ];
 
     }
 
-    public function expireds()
+    public function total_hired()
     {
-        //return $auto_expired = $this->autoInsurerService->auto_expired();
+        //total hired
+        $all_auto = count($this->autoInsurerService->index());
+        $all_eo = count($this->EOInsuranceService->index());
+        $all_life = count($this->individualInsuranceService->index());
+        $all_lease = count($this->leaseBoundInsuranceService->index());
+        $all_residential = count($this->residentialInsuranceService->index());
+
+        return [
+            'total_insurances_registered' => ($all_auto + $all_eo + $all_lease + $all_life + $all_residential),
+            'auto' => $all_auto,
+            'eo' => $all_eo,
+            'life' => $all_life,
+            'lease' => $all_lease,
+            'residential' => $all_residential
+        ];
     }
 
 }
