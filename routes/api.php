@@ -20,7 +20,7 @@ Route::group(['middleware' => ['cors']], function () {
     Route::post('authenticate', 'AuthController@auth');
     Route::get('authenticateds', 'AuthController@getAuthenticatedUser');
 
-    //Route::group(['middleware' => ['auth:api']], function () {
+//    Route::group(['middleware' => ['auth:api']], function () {
 
     Route::get('/user', function (Request $request) {
         return $request->user();
@@ -178,6 +178,13 @@ Route::group(['middleware' => ['cors']], function () {
         Route::get('defaults/{id}', 'DefaultsTemplatingsController@show');
         Route::put('defaults/{id}', 'DefaultsTemplatingsController@update');
         Route::delete('defaults/{id}', 'DefaultsTemplatingsController@destroy');
+    });
+
+    Route::group(['prefix' => 'dashboard'], function () {
+        Route::get('all', 'DashboardController@all_insurances_of_dashboard');
+        Route::get('is_active', 'DashboardController@is_active');
+        Route::get('renew_over_the_next_thirty_days', 'DashboardController@renew_over_the_next_thirty_days');
+        Route::get('total_hired', 'DashboardController@total_hired');
     });
 
     //});

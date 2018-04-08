@@ -125,7 +125,7 @@ class LeaseBoundInsuranceService
 
     public function show($id)
     {
-        return $this->repository->find($id);
+        return $this->repository->with(['client', 'coverage'])->find($id);
     }
 
     public function destroy($id)
