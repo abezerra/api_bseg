@@ -28,11 +28,11 @@ class SmsService
 
     }
 
-    public function store($data)
+    public function store(array $data)
     {
         Nexmo::message()->send([
-            'to' => '5561996291384',
-            'from' => '5561996291384',
+            'to' => $data['to'],
+            'from' => $data['from'],
             'text' => $data['message']
         ]);
         return $this->repository->create($data);

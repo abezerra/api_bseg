@@ -72,7 +72,7 @@ class ClientService
 
     public function show($id)
     {
-        return $this->repository->find($id);
+        return $this->repository->with(['eo', 'individual', 'residential', 'lease', 'auto'])->find($id);
     }
 
     public function update(array $data, $id)

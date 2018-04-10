@@ -34,12 +34,31 @@ class MailerService
     public function create(array $data)
     {
         try {
-//            $this->validator->with($data)->passesOrFail();
             Mail::raw($data['message'], function ($message) use ($data) {
                 $message->subject($data['subject']);
                 $message->from('alsene@brasal.com.br', 'Alsene da Brasal Seguradora');
                 $message->to($data['email']);
             });
+            return $this->repository->create($data);
+        } catch (ValidationException $exception) {
+            return [
+                'error' => true,
+                'message' => $exception->getMessage()
+            ];
+        }
+    }
+
+    public function invite_fliendly(array $data)
+    {
+        try {
+            Mail::send(('friendly'), ["data" => $data['name'], "friend" => $data['i']], function ($message) use ($data){
+                $message->subject('Bem vindo á Brasal Corretora');
+                $message->from('alsene@brasal.com.br', 'Alsene da Brasal Seguradora');
+                $message->to($data['email']);
+            });
+
+            $data['sender'] = $data['i'];
+            $data['to'] = $data['name'];
             return $this->repository->create($data);
         } catch (ValidationException $exception) {
             return [

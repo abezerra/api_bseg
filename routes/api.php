@@ -13,21 +13,24 @@ use Illuminate\Http\Request;
 |
 */
 
-Route::middleware('auth:api')->get('/user', function (Request $request) {
-    return $request->user();
-});
 
 Route::get('dp', 'DepartamentsController@index')->middleware('auth:api');
 
 Route::group(['middleware' => ['cors']], function () {
-    Route::post('authenticate', 'AuthController@authenticate');
-//    Route::group ( [ 'middleware' => [ 'auth.check' ] ] , function () {
+    Route::post('authenticate', 'AuthController@auth');
+    Route::get('authenticateds', 'AuthController@getAuthenticatedUser');
 
-    Route::get('users', 'UsersController@index');
+//    Route::group(['middleware' => ['auth:api']], function () {
 
-    Route::get('user_responsible_of_news_clients', 'UsersController@user_responsible_of_news_clients');
-    Route::post('user_add', 'UsersController@create_new');
-    Route::get('notification', 'NotificationsController@index');
+    Route::get('/user', function (Request $request) {
+        return $request->user();
+    });
+
+    Route::get('details/{cpf}', 'AuthController@details');
+    Route::post('invite', 'FiendsController@invite');
+//        Route::get('user_responsible_of_news_clients', 'UsersController@user_responsible_of_news_clients');
+//        Route::post('user_add', 'UsersController@create_new');
+//        Route::get('notification', 'NotificationsController@index');
 
     Route::group(['prefix' => 'clients'], function () {
         Route::get('', 'ClientsController@index');
@@ -46,6 +49,17 @@ Route::group(['middleware' => ['cors']], function () {
         Route::get('/{id}', 'AlertsController@show');
         Route::put('/{id}', 'AlertsController@update');
         Route::delete('/{id}', 'AlertsController@destroy');
+    });
+
+
+    Route::group(['prefix' => 'notifications'], function () {
+        Route::get('/{cpf}', 'NotificationsController@index');
+        Route::get('/client', 'ClientsController@client');
+        Route::get('/leads', 'ClientsController@lead');
+        Route::post('/sms', 'SmsController@store');
+        Route::get('/{id}', 'ClientsController@show');
+        Route::put('/{id}', 'ClientsController@update');
+        Route::delete('/{id}', 'ClientsController@destroy');
     });
 
     //insurances routes
@@ -104,16 +118,20 @@ Route::group(['middleware' => ['cors']], function () {
         Route::delete('/{id}', 'InsurersController@destroy');
     });
 
-    //broker
+
     Route::group(['prefix' => 'broker'], function () {
         Route::get('', 'BrokersController@index');
         Route::post('', 'BrokersController@store');
         Route::get('/{id}', 'BrokersController@show');
         Route::put('/{id}', 'BrokersController@update');
         Route::delete('/{id}', 'BrokersController@destroy');
+        //to departaments of broker
+        Route::get('/departament/{id}', 'DepartamentsController@show');
+        Route::put('/departament/{id}', 'DepartamentsController@update');
+        Route::delete('/departament/{id}', 'DepartamentsController@destroy');
     });
 
-    //broker
+
     Route::group(['prefix' => 'departaments'], function () {
         Route::get('', 'DepartamentsController@index');
         Route::get('/my/{id}', 'DepartamentsController@my_alerts');
@@ -123,7 +141,7 @@ Route::group(['middleware' => ['cors']], function () {
         Route::delete('/{id}', 'DepartamentsController@destroy');
     });
 
-    //broker
+
     Route::group(['prefix' => 'friend'], function () {
         Route::get('', 'FiendsController@index');
         Route::get('/my/{id}', 'FiendsController@my_alerts');
@@ -133,6 +151,42 @@ Route::group(['middleware' => ['cors']], function () {
         Route::delete('/{id}', 'FiendsController@destroy');
     });
 
-//    });
+    Route::group(['prefix' => 'insured'], function () {
+        Route::get('/{id}', 'IsuredController@my_insurances');
+    });
+
+    Route::get('push', 'InsurersController@send_push');
+
+    Route::post('templating', 'TemplatingsController@create_templates');
+    Route::post('image', 'TemplatingsController@image_templating');
+
+
+    Route::group(['prefix' => 'messages'], function () {
+        Route::get('', 'MessagesController@index');
+        Route::get('/my_messages/{id}', 'MessagesController@my_messages');
+        Route::post('', 'MessagesController@store');
+        Route::get('/{id}', 'MessagesController@show');
+        Route::put('/{id}', 'MessagesController@update');
+        Route::post('reply/{id}', 'MessageRepliesController@store');
+        Route::post('my_reply/{id}', 'MessageRepliesController@store');
+        Route::delete('/{id}', 'MessagesController@destroy');
+    });
+
+    Route::group(['prefix' => 'templatings'], function () {
+        Route::get('defaults', 'DefaultsTemplatingsController@index');
+        Route::post('defaults', 'DefaultsTemplatingsController@store');
+        Route::get('defaults/{id}', 'DefaultsTemplatingsController@show');
+        Route::put('defaults/{id}', 'DefaultsTemplatingsController@update');
+        Route::delete('defaults/{id}', 'DefaultsTemplatingsController@destroy');
+    });
+
+    Route::group(['prefix' => 'dashboard'], function () {
+        Route::get('all', 'DashboardController@all_insurances_of_dashboard');
+        Route::get('is_active', 'DashboardController@is_active');
+        Route::get('renew_over_the_next_thirty_days', 'DashboardController@renew_over_the_next_thirty_days');
+        Route::get('total_hired', 'DashboardController@total_hired');
+    });
+
+    //});
 });
 

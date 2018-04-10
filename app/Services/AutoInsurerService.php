@@ -9,8 +9,11 @@
 namespace App\Services;
 
 
+use App\Entities\AutoInsurance;
 use App\Repositories\AutoInsuranceRepository;
 use App\Validators\AutoInsuranceValidator;
+use Carbon\Carbon;
+use Dotenv\Exception\ValidationException;
 use Illuminate\Support\Facades\DB;
 
 class AutoInsurerService
@@ -52,9 +55,6 @@ class AutoInsurerService
     public function index()
     {
         return $this->repository->with(['coverage', 'client'])->all();
-//        return DB::table('auto_insurances')
-//                    ->join('coverages', 'auto_insurances.id', '=', 'coverages.id')
-//                    ->get();
     }
 
     public function store(array $data)
@@ -72,15 +72,11 @@ class AutoInsurerService
                 }
             }
 
-            //save the policy data
             $save = $this->repository->create($data);
 
-
-            //save the coverage
             for ($i = 0; $i < count($data['coverageArray']); ++$i) {
                 $this->coverageService->store($data['coverageArray'][$i], $save['id']);
             }
-
 
             $this->notificationService->notify_apolice_availability($data);
             return [
@@ -133,4 +129,47 @@ class AutoInsurerService
             'message' => 'Auto Insurer been deleted'
         ];
     }
+
+    /**
+     * @param $id
+     * @return return auto insurance client searched of id
+     */
+    public function my_insurance($cpf)
+    {
+        return $this->repository->with(['client', 'coverage'])->findByField('cpf', $cpf);
+    }
+
+    public function is_active()
+    {
+        $today_is = Carbon::now();
+        $start_monthly = Carbon::parse($today_is)->startOfMonth();
+        $end_montly =  Carbon::parse($today_is)->endOfMonth();
+
+        return DB::table('auto_insurances')
+            ->whereNotBetween('validity', [$start_monthly, $end_montly])
+            ->get()
+            ->toArray();
+    }
+
+    public function auto_expired()
+    {
+        $today_is = Carbon::now();
+        $start_monthly = Carbon::parse($today_is)->startOfMonth();
+
+        $month = $start_monthly->month;
+        if($start_monthly->month < 10)
+        {
+            $month = '0' .$start_monthly->month;
+        }
+        $day = $start_monthly->day;
+        if($start_monthly->day < 10)
+        {
+            $day = '0' . $start_monthly->day;
+        }
+
+        $start_monthly = $start_monthly->year . '-' . $month . '-' . $day;
+
+        return $this->repository->findWhere('validity', '>', $start_monthly);
+    }
+
 }

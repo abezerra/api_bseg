@@ -22,6 +22,7 @@ class EOInsurance extends Model implements Transformable
      */
     protected $fillable = [
         'id',
+        'cpf',
         'insurer',
         'apoliceNumber',
         'validity',
@@ -47,6 +48,6 @@ class EOInsurance extends Model implements Transformable
 
     public function coverage()
     {
-        return $this->belongsTo(Coverage::class, 'coverage_id');
+        return $this->hasMany(EOCoverage::class, 'insurer_id');
     }
 }

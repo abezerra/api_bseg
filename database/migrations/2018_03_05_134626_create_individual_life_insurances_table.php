@@ -17,6 +17,7 @@ class CreateIndividualLifeInsurancesTable extends Migration
 	{
 		Schema::create('individual_life_insurances', function(Blueprint $table) {
             $table->increments('id');
+            $table->string('cpf')->nullable();
             $table->string('insurer')->nullable();
             $table->string('apoliceNumber')->nullable();
             $table->string('validity')->nullable();

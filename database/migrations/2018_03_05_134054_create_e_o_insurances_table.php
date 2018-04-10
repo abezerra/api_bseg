@@ -17,6 +17,7 @@ class CreateEOInsurancesTable extends Migration
 	{
 		Schema::create('e_o_insurances', function(Blueprint $table) {
             $table->increments('id');
+            $table->string('cpf')->nullable();
             $table->string('insurer')->nullable();
             $table->string('apoliceNumber')->nullable();
             $table->string('validity')->nullable();

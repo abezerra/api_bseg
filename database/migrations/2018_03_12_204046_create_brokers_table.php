@@ -17,22 +17,22 @@ class CreateBrokersTable extends Migration
 	{
 		Schema::create('brokers', function(Blueprint $table) {
             $table->increments('id');
-            $table->longText('image');
-            $table->string('name');
-            $table->string('description');
-            $table->string('slogan');
-            $table->string('ddd');
-            $table->string('cellphone');
-            $table->string('telephone');
-            $table->string('email');
-            $table->string('site');
-            $table->string('cep');
-            $table->string('ibge_code');
-            $table->string('address');
-            $table->string('neighborhood');
-            $table->string('complement');
-            $table->string('city');
-            $table->string('uf');
+            $table->longText('image')->nulable();
+            $table->string('name')->nulable();
+            $table->string('description')->nulable();
+            $table->string('slogan')->nulable();
+            $table->string('ddd')->nulable();
+            $table->string('cellphone')->nulable();
+            $table->string('telephone')->nulable();
+            $table->string('email')->nulable();
+            $table->string('site')->nulable();
+            $table->string('cep')->nulable();
+            $table->string('ibge_code')->nulable();
+            $table->string('address')->nulable();
+            $table->string('neighborhood')->nulable();
+            $table->string('complement')->nulable();
+            $table->string('city')->nulable();
+            $table->string('uf')->nulable();
             $table->timestamps();
 		});
 

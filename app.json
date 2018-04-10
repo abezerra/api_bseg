@@ -1,0 +1,111 @@
+{
+  "name": "api_bseg",
+  "scripts": {},
+  "env": {
+    "APP_DEBUG": {
+      "required": true
+    },
+    "APP_ENV": {
+      "required": true
+    },
+    "APP_KEY": {
+      "required": true
+    },
+    "APP_LOG_LEVEL": {
+      "required": true
+    },
+    "APP_URL": {
+      "required": true
+    },
+    "BROADCAST_DRIVER": {
+      "required": true
+    },
+    "CACHE_DRIVER": {
+      "required": true
+    },
+    "DB_CONNECTION": {
+      "required": true
+    },
+    "DB_DATABASE": {
+      "required": true
+    },
+    "DB_HOST": {
+      "required": true
+    },
+    "DB_PASSWORD": {
+      "required": true
+    },
+    "DB_PORT": {
+      "required": true
+    },
+    "DB_USERNAME": {
+      "required": true
+    },
+    "JAWSDB_URL": {
+      "required": true
+    },
+    "MAIL_DRIVER": {
+      "required": true
+    },
+    "MAIL_ENCRYPTION": {
+      "required": true
+    },
+    "MAIL_HOST": {
+      "required": true
+    },
+    "MAIL_PASSWORD": {
+      "required": true
+    },
+    "MAIL_PORT": {
+      "required": true
+    },
+    "MAIL_USERNAME": {
+      "required": true
+    },
+    "PAPERTRAIL_API_TOKEN": {
+      "required": true
+    },
+    "PUSHER_APP_ID": {
+      "required": true
+    },
+    "PUSHER_APP_KEY": {
+      "required": true
+    },
+    "PUSHER_APP_SECRET": {
+      "required": true
+    },
+    "QUEUE_DRIVER": {
+      "required": true
+    },
+    "REDIS_HOST": {
+      "required": true
+    },
+    "REDIS_PASSWORD": {
+      "required": true
+    },
+    "REDIS_PORT": {
+      "required": true
+    },
+    "REDIS_URL": {
+      "required": true
+    },
+    "SESSION_DRIVER": {
+      "required": true
+    }
+  },
+  "formation": {
+    "web": {
+      "quantity": 1
+    }
+  },
+  "addons": [
+    "jawsdb",
+    "papertrail",
+    "heroku-redis"
+  ],
+  "buildpacks": [
+    {
+      "url": "heroku/nodejs"
+    }
+  ]
+}

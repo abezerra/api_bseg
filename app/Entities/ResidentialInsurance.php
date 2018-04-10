@@ -22,6 +22,7 @@ class ResidentialInsurance extends Model implements Transformable
      */
     protected $fillable = [
         'insurer',
+        'cpf',
         'apoliceNumber',
         'validity',
         'accession',
@@ -48,7 +49,7 @@ class ResidentialInsurance extends Model implements Transformable
 
     public function coverage()
     {
-        return $this->belongsTo(Coverage::class, 'coverage_id');
+        return $this->hasMany(ResidentialCoverage::class, 'insurer_id');
     }
 
 }

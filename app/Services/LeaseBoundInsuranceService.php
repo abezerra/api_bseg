@@ -11,6 +11,7 @@ namespace App\Services;
 
 use App\Repositories\LeaseBoundInsuranceRepository;
 use App\Validators\LeaseBoundInsuranceValidator;
+use Dotenv\Exception\ValidationException;
 
 class LeaseBoundInsuranceService
 {
@@ -35,10 +36,18 @@ class LeaseBoundInsuranceService
      */
     private $notificationService;
 
+    /**
+     * LeaseBoundInsuranceService constructor.
+     * @param LeaseBoundInsuranceRepository $repository
+     * @param LeaseBoundInsuranceValidator $validator
+     * @param ClientService $clientService
+     * @param LeaseBoundCoveragesService $coverageService
+     * @param NotificationService $notificationService
+     */
     public function __construct(LeaseBoundInsuranceRepository $repository,
                                 LeaseBoundInsuranceValidator $validator,
                                 ClientService $clientService,
-                                CoverageService $coverageService,
+                                LeaseBoundCoveragesService $coverageService,
                                 NotificationService $notificationService)
     {
         $this->repository = $repository;
@@ -69,9 +78,7 @@ class LeaseBoundInsuranceService
                 }
             }
 
-            //save the policy data
             $save = $this->repository->create($data);
-
 
             //save the coverage
             for ($i = 0; $i < count($data['coverageArray']); ++$i) {
@@ -118,7 +125,7 @@ class LeaseBoundInsuranceService
 
     public function show($id)
     {
-        return $this->repository->find($id);
+        return $this->repository->with(['client', 'coverage'])->find($id);
     }
 
     public function destroy($id)
@@ -128,5 +135,10 @@ class LeaseBoundInsuranceService
             'action' => $this->repository->delete($id),
             'message' => 'Lease bound insurer been deleted'
         ];
+    }
+
+    public function my_insurance($cpf)
+    {
+        return $this->repository->with(['client', 'coverage'])->findByField('cpf', $cpf);
     }
 }

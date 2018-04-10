@@ -11,6 +11,7 @@ namespace App\Services;
 
 use App\Repositories\IndividualLifeInsuranceRepository;
 use App\Validators\IndividualLifeInsuranceValidator;
+use Dotenv\Exception\ValidationException;
 
 class IndividualInsuranceService
 {
@@ -38,7 +39,7 @@ class IndividualInsuranceService
     public function __construct(IndividualLifeInsuranceRepository $repository,
                                 IndividualLifeInsuranceValidator $validator,
                                 ClientService $clientService,
-                                CoverageService $coverageService,
+                                LifeCoreverageService $coverageService,
                                 NotificationService $notificationService)
     {
         $this->repository = $repository;
@@ -69,11 +70,8 @@ class IndividualInsuranceService
                 }
             }
 
-            //save the policy data
             $save = $this->repository->create($data);
 
-
-            //save the coverage
             for ($i = 0; $i < count($data['coverageArray']); ++$i) {
                 $this->coverageService->store($data['coverageArray'][$i], $save['id']);
             }
@@ -82,7 +80,7 @@ class IndividualInsuranceService
             return [
                 'code' => 200,
                 'action' => $save,
-                'message' => 'Auto Insurer has been created'
+                'message' => 'Life Insurer has been created'
             ];
         }
         catch (ValidationException $exception)
@@ -118,7 +116,7 @@ class IndividualInsuranceService
 
     public function show($id)
     {
-        return $this->repository->find($id);
+        return $this->repository->with(['client', 'coverage'])->find($id);
     }
 
     public function destroy($id)
@@ -128,5 +126,10 @@ class IndividualInsuranceService
             'action' => $this->repository->delete($id),
             'message' => 'Individual Insurance been deleted'
         ];
+    }
+
+    public function my_insurance($cpf)
+    {
+        return $this->repository->with(['client', 'coverage'])->findByField('cpf', $cpf);
     }
 }

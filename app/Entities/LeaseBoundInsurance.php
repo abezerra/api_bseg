@@ -21,6 +21,7 @@ class LeaseBoundInsurance extends Model implements Transformable
      * @var array
      */
     protected $fillable = [
+        'cpf',
         'insurer',
         'apoliceNumber',
         'validity',
@@ -48,6 +49,6 @@ class LeaseBoundInsurance extends Model implements Transformable
 
     public function coverage()
     {
-        return $this->belongsTo(Coverage::class, 'coverage_id');
+        return $this->hasMany(LeaseBoundCoverage::class, 'insurer_id');
     }
 }

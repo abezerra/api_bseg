@@ -21,9 +21,10 @@ class Fiend extends Model implements Transformable
      * @var array
      */
     protected $fillable = [
-        'nome',
+        'name',
         'email',
-        'telefone',
+        'phone',
+        'message',
     ];
 
 }

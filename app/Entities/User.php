@@ -8,7 +8,7 @@ use Laravel\Passport\HasApiTokens;
 
 class User extends Authenticatable
 {
-    use HasApiTokens, Notifiable;
+    use Notifiable, HasApiTokens;
 
     /**
      * The attributes that are mass assignable.
@@ -50,5 +50,25 @@ class User extends Authenticatable
     public function alerts()
     {
         return $this->hasMany(Alert::class, 'user_id');
+    }
+
+    public function messages()
+    {
+        return $this->hasMany(Message::class, 'user_id');
+    }
+
+    public function replies()
+    {
+        return $this->hasMany(MessageReply::class, 'replyer_id');
+    }
+
+    public function templates()
+    {
+        return $this->hasMany(Templating::class, 'user_id');
+    }
+
+    public function defaults()
+    {
+        return $this->hasMany(DefaultsTemplating::class, 'created_by');
     }
 }

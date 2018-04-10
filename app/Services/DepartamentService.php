@@ -34,44 +34,39 @@ class DepartamentService
         return $this->repository->paginate(5);
     }
 
-    public function store(array $data)
+    public function store(array $data, $id)
     {
-        try
-        {
+        try {
+            $data['broker_id'] = $id;
             $this->validator->with($data)->passesOrFail();
             return [
                 'code' => 200,
                 'action' => $this->repository->create($data),
                 'message' => 'Departament has been created'
             ];
-        }
-        catch (ValidationException $exception)
-        {
+        } catch (ValidationException $exception) {
             return [
-                'erro'=> 'Validation error',
+                'erro' => 'Validation error',
                 'code' => $exception->getCode(),
-                'message'=> $exception->getMessage()
+                'message' => $exception->getMessage()
             ];
         }
     }
 
     public function update(array $data, $id)
     {
-        try
-        {
+        try {
             $this->validator->with($data)->passesOrFail();
             return [
                 'code' => 200,
                 'action' => $this->repository->update($data, $id),
                 'message' => 'Departament has been created'
             ];
-        }
-        catch (ValidationException $exception)
-        {
+        } catch (ValidationException $exception) {
             return [
-                'erro'=> 'Validation error',
+                'erro' => 'Validation error',
                 'code' => $exception->getCode(),
-                'message'=> $exception->getMessage()
+                'message' => $exception->getMessage()
             ];
         }
     }
