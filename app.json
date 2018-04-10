@@ -1,6 +1,8 @@
 {
   "name": "api_bseg",
-  "scripts": {},
+  "scripts": {
+    "postdeploy": "php artisan migrate"
+  },
   "env": {
     "APP_DEBUG": {
       "required": true
