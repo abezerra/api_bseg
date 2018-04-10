@@ -5,94 +5,94 @@
   },
   "env": {
     "APP_DEBUG": {
-      "required": true
+      "required": false
     },
     "APP_ENV": {
-      "required": true
+      "required": false
     },
     "APP_KEY": {
-      "required": true
+      "required": false
     },
     "APP_LOG_LEVEL": {
-      "required": true
+      "required": false
     },
     "APP_URL": {
-      "required": true
+      "required": false
     },
     "BROADCAST_DRIVER": {
-      "required": true
+      "required": false
     },
     "CACHE_DRIVER": {
-      "required": true
+      "required": false
     },
     "DB_CONNECTION": {
-      "required": true
+      "required": false
     },
     "DB_DATABASE": {
-      "required": true
+      "required": false
     },
     "DB_HOST": {
-      "required": true
+      "required": false
     },
     "DB_PASSWORD": {
-      "required": true
+      "required": false
     },
     "DB_PORT": {
-      "required": true
+      "required": false
     },
     "DB_USERNAME": {
-      "required": true
+      "required": false
     },
     "JAWSDB_URL": {
-      "required": true
+      "required": false
     },
     "MAIL_DRIVER": {
-      "required": true
+      "required": false
     },
     "MAIL_ENCRYPTION": {
-      "required": true
+      "required": false
     },
     "MAIL_HOST": {
-      "required": true
+      "required": false
     },
     "MAIL_PASSWORD": {
-      "required": true
+      "required": false
     },
     "MAIL_PORT": {
-      "required": true
+      "required": false
     },
     "MAIL_USERNAME": {
-      "required": true
+      "required": false
     },
     "PAPERTRAIL_API_TOKEN": {
-      "required": true
+      "required": false
     },
     "PUSHER_APP_ID": {
-      "required": true
+      "required": false
     },
     "PUSHER_APP_KEY": {
-      "required": true
+      "required": false
     },
     "PUSHER_APP_SECRET": {
-      "required": true
+      "required": false
     },
     "QUEUE_DRIVER": {
-      "required": true
+      "required": false
     },
     "REDIS_HOST": {
-      "required": true
+      "required": false
     },
     "REDIS_PASSWORD": {
-      "required": true
+      "required": false
     },
     "REDIS_PORT": {
-      "required": true
+      "required": false
     },
     "REDIS_URL": {
-      "required": true
+      "required": false
     },
     "SESSION_DRIVER": {
-      "required": true
+      "required": false
     }
   },
   "formation": {
