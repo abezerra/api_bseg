@@ -9,7 +9,7 @@
         "ext-gd":"*",
         "ext-redis":"*",
         "ext-sqlite3":"*",
-        "ext-pdo_sqlite":"*"
+        "ext-pdo_sqlite":"*",
         "barryvdh/laravel-cors": "^0.11.0",
         "barryvdh/laravel-ide-helper": "^2.4",
         "fideloper/proxy": "~4.0",
@@ -22,7 +22,7 @@
         "league/glide-laravel": "^1.0",
         "nexmo/laravel": "^1.1",
         "prettus/l5-repository": "^2.6",
-        "pusher/pusher-php-server": "^3.0",
+        "pusher/pusher-php-server": "^3.0"
     },
     "require-dev": {
         "filp/whoops": "~2.0",
