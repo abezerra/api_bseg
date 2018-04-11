@@ -22,7 +22,7 @@ class AuthController extends Controller
                 return response()->json(['success' => $success], 200);
 
         } catch (\Exception $exception) {
-            return response()->json(['error' => 'not acessde', 'cause' => $exception], 500);
+            return response()->json(['error' => 'not acessde', 'cause' => $exception], 401);
         }
 
         return response()->json(['error' => 'Unauthrized'], 401);
