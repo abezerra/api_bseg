@@ -65,8 +65,8 @@
             "@php artisan package:discover"
         ],
         "build" : [
-            "chmod 777 -R /storage",
-            "chmod 777 -R /public"
+            "chmod 777 -R storage",
+            "chmod 777 -R public"
         ]
     },
     "config": {
