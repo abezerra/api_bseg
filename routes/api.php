@@ -160,6 +160,9 @@ Route::group(['middleware' => ['cors']], function () {
     Route::post('templating', 'TemplatingsController@create_templates');
     Route::post('image', 'TemplatingsController@image_templating');
 
+    Route::group(['prefix' => 'medias'], function () {
+        Route::get('/{id}', 'TemplatingsController@show');
+    });
 
     Route::group(['prefix' => 'messages'], function () {
         Route::get('', 'MessagesController@index');
@@ -187,6 +190,6 @@ Route::group(['middleware' => ['cors']], function () {
         Route::get('total_hired', 'DashboardController@total_hired');
     });
 
-    //});
+   // });
 });
 
