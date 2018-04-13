@@ -60,7 +60,7 @@ class DefaultsTemplatingsController extends Controller
      *
      * @throws \Prettus\Validator\Exceptions\ValidatorException
      */
-    public function store(DefaultsTemplatingCreateRequest $request)
+    public function store(Request $request)
     {
         try {
 
@@ -79,7 +79,7 @@ class DefaultsTemplatingsController extends Controller
             $data['status'] = 'active';
             $data['created_by'] = 11;
 
-            return $this->repository->create($data);
+            $defaultsTemplating = $this->repository->create($data);
 
             $response = [
                 'message' => 'DefaultsTemplating created.',
