@@ -248,7 +248,7 @@ class TemplatingsController extends Controller
 
         $data['media_name'] = "http://laravel.test/img/{$imageName}";
         $data['user_id'] = 11;
-        
+
         return [
             'path' => 'http://laravel.test/img/' . $imageName
         ];
