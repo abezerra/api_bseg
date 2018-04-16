@@ -112,16 +112,7 @@ class TemplatingsController extends Controller
      */
     public function show($id)
     {
-        $templating = $this->repository->find($id);
-
-        if (request()->wantsJson()) {
-
-            return response()->json([
-                'data' => $templating,
-            ]);
-        }
-
-        return view('templatings.show', compact('templating'));
+        return $this->repository->with(['users'])->findByField('user_id', $id);
     }
 
     /**
@@ -255,19 +246,11 @@ class TemplatingsController extends Controller
         $imageName = md5('brasalimg') . '.jpg';
         $img->save(public_path('img/' . $imageName));
 
-        $data['media_name'] = "http://laravel.test/img/{$imageName}";
+        $data['media_name'] = "https://api-seguradora-staging.herokuapp.com/img/{$imageName}";
         $data['user_id'] = 11;
 
-
-//        Templating::create([
-//            'name' => $data['name'],
-//            'phone' => $data['phone'],
-//            'media_name' => $data['media_name'],
-//            'user_id' => $data['user_id']
-//        ]);
-
         return [
-            'path' => 'http://laravel.test/img/' . $imageName
+            'path' => 'https://api-seguradora-staging.herokuapp.com/img/' . $imageName
         ];
 
     }

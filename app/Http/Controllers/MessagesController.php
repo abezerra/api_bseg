@@ -52,8 +52,14 @@ class MessagesController extends Controller
      */
     public function store(Request $request)
     {
-        return $this->repository->create($request->all());
-        //return response()->json(['a porra do maldito sucesso' => $message], 200);
+        $data = $request->all();
+        $photoName = time() . '.' . $request->photo->getClientOriginalExtension();
+
+
+
+        $data['attachmet'] = "https://api-seguradora-staging.herokuapp.com/messages/{$photoName}";
+        $this->repository->create($data);
+        return response()->json(['data' => $request->photo->move(public_path('messages'), $photoName)], 200);
     }
 
     /**
