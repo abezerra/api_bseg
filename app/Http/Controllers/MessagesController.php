@@ -54,8 +54,8 @@ class MessagesController extends Controller
     {
         $data = $request->all();
         $photoName = time() . '.' . $request->photo->getClientOriginalExtension();
-//        $request->photo->move(public_path('messages'), $photoName);
-        $data['attachmet'] = "https://api-seguradora-staging.herokuapp.com/messages/{$photoName}";
+        $request->photo->move(public_path('img'), $photoName);
+        $data['attachmet'] = "https://api-seguradora-staging.herokuapp.com/img/{$photoName}";
         $message = $this->repository->create($data);
         return response()->json(['data' => $message], 200);
     }
