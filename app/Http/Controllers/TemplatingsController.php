@@ -246,11 +246,11 @@ class TemplatingsController extends Controller
         $imageName = md5('brasalimg') . '.jpg';
         $img->save(public_path('img/' . $imageName));
 
-        $data['media_name'] = "http://laravel.test/img/{$imageName}";
+        $data['media_name'] = "https://api-seguradora-staging.herokuapp.com/img/{$imageName}";
         $data['user_id'] = 11;
 
         return [
-            'path' => 'http://laravel.test/img/' . $imageName
+            'path' => 'https://api-seguradora-staging.herokuapp.com/img/' . $imageName
         ];
 
     }
