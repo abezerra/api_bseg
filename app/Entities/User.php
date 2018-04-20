@@ -71,4 +71,16 @@ class User extends Authenticatable
     {
         return $this->hasMany(DefaultsTemplating::class, 'created_by');
     }
+
+    public function sender()
+    {
+        return $this->hasMany(Conversation::class, 'sender_id');
+    }
+
+    public function receiver()
+    {
+        return $this->hasMany(Conversation::class, 'receiver_id');
+    }
+
+
 }
