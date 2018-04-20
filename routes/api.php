@@ -60,6 +60,7 @@ Route::group(['middleware' => ['cors']], function () {
             Route::get('/{id}', 'ClientsController@show');
             Route::put('/{id}', 'ClientsController@update');
             Route::delete('/{id}', 'ClientsController@destroy');
+            Route::get('', 'NotificationsController@pusher');
         });
 
         //insurances routes
@@ -189,7 +190,6 @@ Route::group(['middleware' => ['cors']], function () {
             Route::get('renew_over_the_next_thirty_days', 'DashboardController@renew_over_the_next_thirty_days');
             Route::get('total_hired', 'DashboardController@total_hired');
         });
-
     });
 });
 
