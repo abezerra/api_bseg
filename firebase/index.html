@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Push Notification - School of Net</title>
+    <!--<link rel="manifest" href="manifest.json">-->
+</head>
+<body>
+<script src="https://www.gstatic.com/firebasejs/4.12.1/firebase.js"></script>
+<script>
+  // Initialize Firebase
+  var config = {
+    apiKey: "AIzaSyDqOAuFMExxZ6PMbkDkUQRoiQOdFZpjeWc",
+    authDomain: "bcorretora0.firebaseapp.com",
+    databaseURL: "https://bcorretora0.firebaseio.com",
+    projectId: "bcorretora0",
+    storageBucket: "bcorretora0.appspot.com",
+    messagingSenderId: "755517338868"
+  };
+  //enviar notificação para vários devices "registration_ids": ["",""]
+  var firebaseApp = firebase.initializeApp(config);
+  var messaging = firebaseApp.messaging();
+  messaging.requestPermission()
+    .then(function(){
+      console.log('Permissão concedida');
+      messaging.getToken()
+        .then(function(token){
+          console.log('token do device',token);
+        });
+    });
+  messaging.onMessage(function(payload){
+    alert('Mensagem recebida');
+    console.log(payload);
+  });
+  messaging.onTokenRefresh().then(function(token){
+  })
+</script>
+</body>
+</html>
