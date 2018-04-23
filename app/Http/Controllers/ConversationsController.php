@@ -2,13 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-
-use App\Http\Requests;
-use Prettus\Validator\Contracts\ValidatorInterface;
+use App\Entities\Chats;
+use App\Entities\Client;
+use App\Entities\User;
+use App\Events\ChatEvent;
 use Prettus\Validator\Exceptions\ValidatorException;
 use App\Http\Requests\ConversationCreateRequest;
-use App\Http\Requests\ConversationUpdateRequest;
 use App\Repositories\ConversationRepository;
 use App\Validators\ConversationValidator;
 
@@ -41,11 +40,6 @@ class ConversationsController extends Controller
         $this->validator = $validator;
     }
 
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function index()
     {
         $this->repository->pushCriteria(app('Prettus\Repository\Criteria\RequestCriteria'));
@@ -61,20 +55,36 @@ class ConversationsController extends Controller
         return view('conversations.index', compact('conversations'));
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  ConversationCreateRequest $request
-     *
-     * @return \Illuminate\Http\Response
-     *
-     * @throws \Prettus\Validator\Exceptions\ValidatorException
-     */
     public function store(ConversationCreateRequest $request)
     {
         try {
+            $data = $request->all();
 
-            $conversation = $this->repository->create($request->all());
+            $chat_history = (new Chats)->newQuery()->where('client_id', '=', $data['client_id'])->get();
+            $chat_history = $chat_history->toArray();
+
+
+            if(count($chat_history) <= 0){
+                $chat = Chats::create([
+                    'clerck_id' => $data['clerck_id'],
+                    'client_id' => $data['client_id'],
+                ]);
+
+                $data['chats_id'] = $chat['id'];
+            }else {
+                $data['chats_id'] = $chat_history[0]['id'];
+            }
+
+
+
+            $conversation = $this->repository->create($data);
+
+            $user = (new User)->newQuery()->find($data['user_id']);
+
+            $event = new ChatEvent($conversation, $user);
+            dd($event);
+
+            event($event);
 
             $response = [
                 'message' => 'Conversation created.',
@@ -91,109 +101,17 @@ class ConversationsController extends Controller
         }
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int $id
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        $conversation = $this->repository->find($id);
-
-        if (request()->wantsJson()) {
-
-            return response()->json([
-                'data' => $conversation,
-            ]);
-        }
-
-        return view('conversations.show', compact('conversation'));
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int $id
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        $conversation = $this->repository->find($id);
-
-        return view('conversations.edit', compact('conversation'));
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  ConversationUpdateRequest $request
-     * @param  string $id
-     *
-     * @return Response
-     *
-     * @throws \Prettus\Validator\Exceptions\ValidatorException
-     */
-    public function update(ConversationUpdateRequest $request, $id)
-    {
-        try {
-
-            $this->validator->with($request->all())->passesOrFail(ValidatorInterface::RULE_UPDATE);
-
-            $conversation = $this->repository->update($request->all(), $id);
-
-            $response = [
-                'message' => 'Conversation updated.',
-                'data' => $conversation->toArray(),
-            ];
-
-            if ($request->wantsJson()) {
-
-                return response()->json($response);
-            }
-
-            return redirect()->back()->with('message', $response['message']);
-        } catch (ValidatorException $e) {
-
-            if ($request->wantsJson()) {
-
-                return response()->json([
-                    'error' => true,
-                    'message' => $e->getMessageBag()
-                ]);
-            }
-
-            return redirect()->back()->withErrors($e->getMessageBag())->withInput();
-        }
-    }
-
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int $id
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        $deleted = $this->repository->delete($id);
-
-        if (request()->wantsJson()) {
-
-            return response()->json([
-                'message' => 'Conversation deleted.',
-                'deleted' => $deleted,
-            ]);
-        }
-
-        return redirect()->back()->with('message', 'Conversation deleted.');
-    }
 
     public function history($id)
     {
-        return $this->repository->with(['receiver', 'sender'])->findByField('receiver_id', $id);
+        $conversation = (new Chats)
+                                    ->newQuery()
+                                    ->with(['chat_messages', 'client', 'clerck'])
+                                    ->where('client_id', '=', $id)
+                                    ->get();
+
+        $client = (new Client)->newQuery()->where('user_id', '=', $id)->get();
+
+        return response()->json(['client' => $client, 'historic_conversation' => $conversation], 200);
     }
 }

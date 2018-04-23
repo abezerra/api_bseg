@@ -7,11 +7,11 @@ use Prettus\Repository\Contracts\Transformable;
 use Prettus\Repository\Traits\TransformableTrait;
 
 /**
- * Class Conversation.
+ * Class Chats.
  *
  * @package namespace App\Entities;
  */
-class Conversation extends Model implements Transformable
+class Chats extends Model implements Transformable
 {
     use TransformableTrait;
 
@@ -21,27 +21,23 @@ class Conversation extends Model implements Transformable
      * @var array
      */
     protected $fillable = [
-        'chats_id',
         'clerck_id',
         'client_id',
-        'message',
-        'attachment',
-        'user_id'
     ];
 
-    public function receiver()
-    {
-        return $this->belongsTo(User::class, 'client_id');
-    }
-
-    public function sender()
+    public function clerck()
     {
         return $this->belongsTo(User::class, 'clerck_id');
     }
 
-    public function chat()
+    public function client()
     {
-        return $this->belongsTo(Chats::class, 'chats_id');
+        return $this->belongsTo(User::class, 'client_id');
+    }
+
+    public function chat_messages()
+    {
+        return $this->hasMany(Conversation::class, 'chats_id');
     }
 
 }

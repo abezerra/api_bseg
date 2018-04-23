@@ -74,12 +74,22 @@ class User extends Authenticatable
 
     public function sender()
     {
-        return $this->hasMany(Conversation::class, 'sender_id');
+        return $this->hasMany(Conversation::class, 'clerck_id');
     }
 
     public function receiver()
     {
-        return $this->hasMany(Conversation::class, 'receiver_id');
+        return $this->hasMany(Conversation::class, 'client_id');
+    }
+
+    public function chat_clerck()
+    {
+        return $this->hasMany(Chats::class, 'clerck_id');
+    }
+
+    public function chat_clients()
+    {
+        return $this->hasMany(Chats::class, 'client_id');
     }
 
 

@@ -18,11 +18,14 @@ class CreateConversationsTable extends Migration
 		Schema::create('conversations', function(Blueprint $table) {
             $table->increments('id');
 
-            $table->integer('sender_id')->unsigned()->nullable();
-            $table->foreign('sender_id')->references('id')->on('users');
+            $table->integer('chats_id')->unsigned()->nullable();
+            $table->integer('user_id')->unsigned()->nullable();
 
-            $table->integer('receiver_id')->unsigned()->nullable();
-            $table->foreign('receiver_id')->references('id')->on('users');
+            $table->integer('client_id')->unsigned()->nullable();
+            $table->foreign('client_id')->references('id')->on('users');
+
+            $table->integer('clerck_id')->unsigned()->nullable();
+            $table->foreign('clerck_id')->references('id')->on('users');
 
             $table->longText('message')->nullable();
             $table->longText('attachment')->nullable();
