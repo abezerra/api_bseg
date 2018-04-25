@@ -82,7 +82,7 @@ class ConversationsController extends Controller
             $user = (new User)->newQuery()->find($data['user_id']);
 
             $event = new ChatEvent($conversation, $user);
-            dd($event);
+
 
             event($event);
 
