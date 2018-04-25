@@ -8,9 +8,7 @@
     "APP_ENV": "local",
     "APP_KEY": "base64:NXwqcIpkzntU7ESUgHdTVG2SVhacJy9ql+C3qbnZw0Q=",
     "APP_LOG_LEVEL": "debug",
-    "APP_URL": {
-      "required": false
-    },
+    "APP_URL": "",
     "BROADCAST_DRIVER": "redis",
     "CACHE_DRIVER": "file",
     "DB_CONNECTION": "mysql",
@@ -21,17 +19,11 @@
     "DB_USERNAME": "sl59zcwnfmhja53f",
     "JAWSDB_URL": "mysql://sl59zcwnfmhja53f:x1t6ox4qtpdkvh4x@i5x1cqhq5xbqtv00.cbetxkdyhwsb.us-east-1.rds.amazonaws.com:3306/z7p2xoudg1zlajo3",
     "MAIL_DRIVER": "smtp",
-    "MAIL_ENCRYPTION": {
-      "required": false
-    },
+    "MAIL_ENCRYPTION": "",
     "MAIL_HOST": "mailtrap.io",
-    "MAIL_PASSWORD": {
-      "required": false
-    },
+    "MAIL_PASSWORD": "",
     "MAIL_PORT": "2525",
-    "MAIL_USERNAME": {
-      "required": false
-    },
+    "MAIL_USERNAME": "",
     "PAPERTRAIL_API_TOKEN": "9okfvPrkYl7mb03Pg4lr",
     "QUEUE_DRIVER": "sync",
     "REDIS_HOST": "ec2-35-171-227-50.compute-1.amazonaws.com",
