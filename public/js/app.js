@@ -17294,7 +17294,7 @@ if (token) {
 window.Echo = new __WEBPACK_IMPORTED_MODULE_0_laravel_echo___default.a({
   broadcaster: 'socket.io',
   client: __webpack_require__(57),
-  host: 'https://api-seguradora-staging.herokuapp.com:6001'
+  host: 'http://localhost:6001'
 });
 
 window.Echo.channel('chat').listen('ChatEvent', function (e) {

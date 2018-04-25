@@ -51,7 +51,7 @@ import Echo from 'laravel-echo'
  window.Echo = new Echo({
    broadcaster: 'socket.io',
    client: require('socket.io-client'),
-   host: 'https://api-seguradora-staging.herokuapp.com:6001',
+   host: 'http://localhost:6001',
  });
 
 window.Echo.channel('chat').listen('ChatEvent', e => console.log('Evento do chat', e))

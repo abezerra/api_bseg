@@ -1,12 +1,12 @@
 {
-	"authHost": "https://api-seguradora-staging.herokuapp.com",
+	"authHost": "http://localhost",
 	"authEndpoint": "/broadcasting/auth",
 	"clients": [],
 	"database": "redis",
 	"databaseConfig": {
 		"redis": {
-			"port": "48469",
-			"host": "ec2-35-171-227-50.compute-1.amazonaws.com"
+			"port": "6379",
+			"host": "localhost"
 		},
 		"sqlite": {
 			"databasePath": "/database/laravel-echo-server.sqlite"
@@ -15,7 +15,7 @@
 	"devMode": true,
 	"host": null,
 	"port": "6001",
-	"protocol": "https",
+	"protocol": "http",
 	"socketio": {},
 	"sslCertPath": "",
 	"sslKeyPath": "",
@@ -23,7 +23,7 @@
 	"sslPassphrase": "",
 	"apiOriginAllow": {
 		"allowCors": true,
-		"allowOrigin": "https://api-seguradora-staging.herokuapp.com:80",
+		"allowOrigin": "http://localhost:80",
 		"allowMethods": "GET, POST",
 		"allowHeaders": "Origin, Content-Type, X-Auth-Token, X-Requested-With, Accept, Authorization, X-CSRF-TOKEN, X-Socket-Id"
 	}

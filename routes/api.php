@@ -196,6 +196,7 @@ Route::group(['middleware' => ['cors']], function () {
             Route::get('/client/{id}', 'ConversationsController@history');
             Route::get('/conversations/{id}', 'ClientsController@show');
             Route::post('', 'ConversationsController@store');
+            Route::get('/push', 'ConversationsController@push');
         });
     });
 });

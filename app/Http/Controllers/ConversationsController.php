@@ -6,6 +6,7 @@ use App\Entities\Chats;
 use App\Entities\Client;
 use App\Entities\User;
 use App\Events\ChatEvent;
+use App\Notifications\PushToAll;
 use Prettus\Validator\Exceptions\ValidatorException;
 use App\Http\Requests\ConversationCreateRequest;
 use App\Repositories\ConversationRepository;
@@ -113,5 +114,58 @@ class ConversationsController extends Controller
         $client = (new Client)->newQuery()->where('user_id', '=', $id)->get();
 
         return response()->json(['client' => $client, 'historic_conversation' => $conversation], 200);
+    }
+
+    public function push()
+    {
+        $content      = array(
+            "en" => 'Xico Butico',
+
+        );
+        $hashes_array = array();
+        array_push($hashes_array, array(
+            "id" => "like-button",
+            "text" => "Like",
+            "icon" => "http://i.imgur.com/N8SN8ZS.png",
+            "url" => "https://brasal.com.br"
+        ));
+        array_push($hashes_array, array(
+            "id" => "like-button-2",
+            "text" => "Like2",
+            "icon" => "http://i.imgur.com/N8SN8ZS.png",
+            "url" => "https://yoursite.com"
+        ));
+        $fields = array(
+            'app_id' => "d080bcee-26b9-46b3-b7ae-02371fb58874",
+            'included_segments' => array(
+                'All'
+            ),
+            'data' => array(
+                "foo" => "bar"
+            ),
+            'contents' => $content,
+            'web_buttons' => $hashes_array
+        );
+
+        $fields = json_encode($fields);
+//        print("\nJSON sent:\n");
+//        print($fields);
+
+        $ch = curl_init();
+        curl_setopt($ch, CURLOPT_URL, "https://onesignal.com/api/v1/notifications");
+        curl_setopt($ch, CURLOPT_HTTPHEADER, array(
+            'Content-Type: application/json; charset=utf-8',
+            'Authorization: Basic ZGVlNjRhMjItYjVjOS00MzNmLTgxOWYtMzc2YjMyMmNhZDgw'
+        ));
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
+        curl_setopt($ch, CURLOPT_HEADER, FALSE);
+        curl_setopt($ch, CURLOPT_POST, TRUE);
+        curl_setopt($ch, CURLOPT_POSTFIELDS, $fields);
+        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, FALSE);
+
+        $response = curl_exec($ch);
+        curl_close($ch);
+
+        return response()->json(['data' => $response], 200);
     }
 }

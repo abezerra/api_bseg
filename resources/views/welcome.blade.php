@@ -91,7 +91,7 @@
         </div>
     </div>
 </div>
-<script src="https://api-seguradora-staging.herokuapp.com/socket.io/socket.io.js"></script>
+<script src="http://localhost:6001/socket.io/socket.io.js"></script>
 <script src="{{ asset('js/app.js')}}"></script>
 </body>
 </html>
