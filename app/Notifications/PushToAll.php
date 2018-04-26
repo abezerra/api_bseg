@@ -66,6 +66,6 @@ class PushToAll extends Notification
         return OneSignalMessage::create()
             ->subject('Teste de envio de Push pela API')
             ->body('Corpo da psuh notification')
-            ->url('bseg@brasal.com.br');
+            ->url('bseg.brasal.com.br');
     }
 }

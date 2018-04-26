@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Entities\Chats;
 use App\Entities\Client;
+use App\Entities\PushNotification;
 use App\Entities\User;
 use App\Events\ChatEvent;
 use App\Notifications\PushToAll;
@@ -116,11 +117,23 @@ class ConversationsController extends Controller
         return response()->json(['client' => $client, 'historic_conversation' => $conversation], 200);
     }
 
-    public function push()
+    public function push(ConversationCreateRequest $request)
     {
+        $data = $request->all();
         $content      = array(
-            "en" => 'Xico Butico',
+            "en" => $data['message'],
 
+        );
+        $heading = array(
+            "en" => $data['heading']
+        );
+
+        $subtitle = array(
+            "en" => $data['subtitle']
+        );
+
+        $url = array(
+            "en" => "url"
         );
         $hashes_array = array();
         array_push($hashes_array, array(
@@ -141,15 +154,18 @@ class ConversationsController extends Controller
                 'All'
             ),
             'data' => array(
-                "foo" => "bar"
+                "foo" => "bar",
+                'subtitle' => 'Subtitle'
             ),
             'contents' => $content,
-            'web_buttons' => $hashes_array
+            'web_buttons' => $hashes_array,
+            'headings' => $heading,
+            'subtitle' => $subtitle,
+            'url' => $url,
         );
 
         $fields = json_encode($fields);
-//        print("\nJSON sent:\n");
-//        print($fields);
+
 
         $ch = curl_init();
         curl_setopt($ch, CURLOPT_URL, "https://onesignal.com/api/v1/notifications");
@@ -166,6 +182,13 @@ class ConversationsController extends Controller
         $response = curl_exec($ch);
         curl_close($ch);
 
-        return response()->json(['data' => $response], 200);
+        PushNotification::create([
+            'heading' => $data['heading'],
+            'subtitle' => $data['subtitle'],
+            'message' => $data['message'],
+            'sended_by' => $data['sended_by'],
+        ]);
+
+        return $response;
     }
 }

@@ -92,5 +92,10 @@ class User extends Authenticatable
         return $this->hasMany(Chats::class, 'client_id');
     }
 
+    public function push()
+    {
+        return $this->hasMany(PushNotification::class, 'sended_by');
+    }
+
 
 }
