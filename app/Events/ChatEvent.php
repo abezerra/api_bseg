@@ -23,15 +23,25 @@ class ChatEvent implements ShouldBroadcast
      * @var User
      */
     public $user_id;
+    public $respondedor;
 
     /**
      * Create a new event instance.
      *
      * @return void
      */
+
+    //private chat
+//    public function __construct(Conversation $conversation, User $user_id, $respondedor)
+//    {
+//        $this->conversation = $conversation;
+//        $this->user_id = $user_id;
+//        $this->respondedor = $respondedor;
+//    }
+
+    //public chat
     public function __construct(Conversation $conversation, User $user_id)
     {
-        //
         $this->conversation = $conversation;
         $this->user_id = $user_id;
     }
@@ -41,6 +51,14 @@ class ChatEvent implements ShouldBroadcast
      *
      * @return \Illuminate\Broadcasting\Channel|array
      */
+
+    //private chat app
+//    public function broadcastOn()
+//    {
+//        return new PrivateChannel('chat.'. $this.$this->user_id );
+//    }
+
+    //public chat
     public function broadcastOn()
     {
         return new Channel('chat');

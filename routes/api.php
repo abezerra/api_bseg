@@ -198,6 +198,14 @@ Route::group(['middleware' => ['cors']], function () {
             Route::post('', 'ConversationsController@store');
             Route::post('/push', 'ConversationsController@push');
         });
+
+        Route::group(['prefix' => 'pushnotifications'], function () {
+            Route::get('', 'PushNotificationsController@index');
+            Route::get('/conversations/{id}', 'ClientsController@show');
+            Route::post('', 'ConversationsController@store');
+            Route::post('/push', 'ConversationsController@push');
+        });
+
     });
 });
 

@@ -48,17 +48,8 @@ class PushNotificationsController extends Controller
      */
     public function index()
     {
-        $this->repository->pushCriteria(app('Prettus\Repository\Criteria\RequestCriteria'));
-        $pushNotifications = $this->repository->all();
 
-        if (request()->wantsJson()) {
-
-            return response()->json([
-                'data' => $pushNotifications,
-            ]);
-        }
-
-        return view('pushNotifications.index', compact('pushNotifications'));
+        return response()->json($this->repository->with(['sender'])->all(), 200);
     }
 
     /**
