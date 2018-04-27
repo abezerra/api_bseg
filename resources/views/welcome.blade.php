@@ -92,7 +92,6 @@
     </div>
 </div>
 <script src="https://api-corretora-staging.herokuapp.com/socket.io/socket.io.js"></script>
-<script src="{{  }}"></script>
 <script src="{{ asset('js/app.js')}}"></script>
 </body>
 </html>
