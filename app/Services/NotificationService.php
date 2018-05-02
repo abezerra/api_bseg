@@ -9,6 +9,7 @@
 namespace App\Services;
 
 
+use App\Notifications\PushToAll;
 use App\Repositories\NotificationRepository;
 use App\Validators\NotificationValidator;
 use Dotenv\Exception\ValidationException;

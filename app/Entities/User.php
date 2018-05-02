@@ -71,4 +71,31 @@ class User extends Authenticatable
     {
         return $this->hasMany(DefaultsTemplating::class, 'created_by');
     }
+
+    public function sender()
+    {
+        return $this->hasMany(Conversation::class, 'clerck_id');
+    }
+
+    public function receiver()
+    {
+        return $this->hasMany(Conversation::class, 'client_id');
+    }
+
+    public function chat_clerck()
+    {
+        return $this->hasMany(Chats::class, 'clerck_id');
+    }
+
+    public function chat_clients()
+    {
+        return $this->hasMany(Chats::class, 'client_id');
+    }
+
+    public function push()
+    {
+        return $this->hasMany(PushNotification::class, 'sended_by');
+    }
+
+
 }

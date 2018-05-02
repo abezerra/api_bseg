@@ -12,7 +12,7 @@
 */
 
 Route::get('/', function () {
-    //return view('welcome');
+    return view('welcome');
 //    $query = http_build_query([
 //       'client_id' => '3',
 //       'redirect_uri' => 'http://localhost:9999/callback',
