@@ -14,3 +14,12 @@
 Broadcast::channel('App.User.{id}', function ($user, $id) {
     return (int) $user->id === (int) $id;
 });
+
+Broadcast::channel('per-to-per-chat', function ($user, $id) {
+    return true;
+});
+
+//private chanell
+//Broadcast::channel('per-to-per-chat.{id}', function ($user, $id) {
+//    return $user;
+//});

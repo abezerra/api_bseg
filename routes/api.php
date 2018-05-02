@@ -34,6 +34,7 @@ Route::group(['middleware' => ['cors']], function () {
 
         Route::group(['prefix' => 'clients'], function () {
             Route::get('', 'ClientsController@index');
+            Route::get('/conversations/{id}', 'ClientsController@show');
             Route::get('/client', 'ClientsController@client');
             Route::get('/leads', 'ClientsController@lead');
             Route::post('', 'ClientsController@store');
@@ -60,6 +61,7 @@ Route::group(['middleware' => ['cors']], function () {
             Route::get('/{id}', 'ClientsController@show');
             Route::put('/{id}', 'ClientsController@update');
             Route::delete('/{id}', 'ClientsController@destroy');
+            Route::get('', 'NotificationsController@pusher');
         });
 
         //insurances routes
@@ -188,6 +190,20 @@ Route::group(['middleware' => ['cors']], function () {
             Route::get('is_active', 'DashboardController@is_active');
             Route::get('renew_over_the_next_thirty_days', 'DashboardController@renew_over_the_next_thirty_days');
             Route::get('total_hired', 'DashboardController@total_hired');
+        });
+
+        Route::group(['prefix' => 'liveconversation'], function () {
+            Route::get('/client/{id}', 'ConversationsController@history');
+            Route::get('/conversations/{id}', 'ClientsController@show');
+            Route::post('', 'ConversationsController@store');
+            Route::post('/push', 'ConversationsController@push');
+        });
+
+        Route::group(['prefix' => 'pushnotifications'], function () {
+            Route::get('', 'PushNotificationsController@index');
+            Route::get('/conversations/{id}', 'ClientsController@show');
+            Route::post('', 'ConversationsController@store');
+            Route::post('/push', 'ConversationsController@push');
         });
 
     });

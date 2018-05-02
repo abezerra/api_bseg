@@ -1,1 +1,1 @@
-web: vendor/bin/heroku-php-apache2 public/
+web: vendor/bin/heroku-php-apache2 public/ && pm2 start echo.json && pm2 logs all

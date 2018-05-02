@@ -1,99 +1,47 @@
 {
   "name": "api_bseg",
   "scripts": {
-    "postdeploy": "php artisan migrate"
+    "postdeploy": "php artisan migrate --seed"
   },
   "env": {
-    "APP_DEBUG": {
-      "required": false
-    },
-    "APP_ENV": {
-      "required": false
-    },
-    "APP_KEY": {
-      "required": false
-    },
-    "APP_LOG_LEVEL": {
-      "required": false
-    },
-    "APP_URL": {
-      "required": false
-    },
-    "BROADCAST_DRIVER": {
-      "required": false
-    },
-    "CACHE_DRIVER": {
-      "required": false
-    },
-    "DB_CONNECTION": {
-      "required": false
-    },
-    "DB_DATABASE": {
-      "required": false
-    },
-    "DB_HOST": {
-      "required": false
-    },
-    "DB_PASSWORD": {
-      "required": false
-    },
-    "DB_PORT": {
-      "required": false
-    },
-    "DB_USERNAME": {
-      "required": false
-    },
-    "JAWSDB_URL": {
-      "required": false
-    },
-    "MAIL_DRIVER": {
-      "required": false
-    },
-    "MAIL_ENCRYPTION": {
-      "required": false
-    },
-    "MAIL_HOST": {
-      "required": false
-    },
-    "MAIL_PASSWORD": {
-      "required": false
-    },
-    "MAIL_PORT": {
-      "required": false
-    },
-    "MAIL_USERNAME": {
-      "required": false
-    },
-    "PAPERTRAIL_API_TOKEN": {
-      "required": false
-    },
-    "PUSHER_APP_ID": {
-      "required": false
-    },
-    "PUSHER_APP_KEY": {
-      "required": false
-    },
-    "PUSHER_APP_SECRET": {
-      "required": false
-    },
-    "QUEUE_DRIVER": {
-      "required": false
-    },
-    "REDIS_HOST": {
-      "required": false
-    },
-    "REDIS_PASSWORD": {
-      "required": false
-    },
-    "REDIS_PORT": {
-      "required": false
-    },
-    "REDIS_URL": {
-      "required": false
-    },
-    "SESSION_DRIVER": {
-      "required": false
-    }
+    "APP_DEBUG": "true",
+    "APP_ENV": "local",
+    "APP_KEY": "base64:NXwqcIpkzntU7ESUgHdTVG2SVhacJy9ql+C3qbnZw0Q=",
+    "APP_LOG_LEVEL": "debug",
+    "APP_URL": "https://api-corretora-staging.herokuapp.com/",
+    "BROADCAST_DRIVER": "redis",
+    "CACHE_DRIVER": "file",
+    "DB_CONNECTION": "mysql",
+    "DB_DATABASE": "z7p2xoudg1zlajo3",
+    "DB_HOST": "i5x1cqhq5xbqtv00.cbetxkdyhwsb.us-east-1.rds.amazonaws.com",
+    "DB_PASSWORD": "x1t6ox4qtpdkvh4x",
+    "DB_PORT": "3306",
+    "DB_USERNAME": "sl59zcwnfmhja53f",
+    "JAWSDB_URL": "mysql://sl59zcwnfmhja53f:x1t6ox4qtpdkvh4x@i5x1cqhq5xbqtv00.cbetxkdyhwsb.us-east-1.rds.amazonaws.com:3306/z7p2xoudg1zlajo3",
+    "MAIL_DRIVER": "smtp",
+    "MAIL_ENCRYPTION": null,
+    "MAIL_HOST": "mailtrap.io",
+    "MAIL_PASSWORD": null,
+    "MAIL_PORT": "2525",
+    "MAIL_USERNAME": null,
+    "PAPERTRAIL_API_TOKEN": "9okfvPrkYl7mb03Pg4lr",
+    "QUEUE_DRIVER": "sync",
+    "REDIS_HOST": "ec2-35-171-227-50.compute-1.amazonaws.com",
+    "REDIS_PASSWORD": "pc279fc7b76f32ab193205dc05e9000fe90c9ed7d76745686880bf41b60c1332a",
+    "REDIS_PORT": "48469",
+    "REDIS_URL": "redis://h:pc279fc7b76f32ab193205dc05e9000fe90c9ed7d76745686880bf41b60c1332a@ec2-35-171-227-50.compute-1.amazonaws.com:48469",
+    "SESSION_DRIVER": "file",
+    "FCM_SENDER_ID": "AIzaSyA2rhum79kslFRWQyzDbtamWwc25sCTXcw",
+    "FCM_SERVER_KEY": "AAAAr-hXtPQ:APA91bG0bXIGNmG3_7W4q6Kf0bp9UzKbz1OY-QqjTiv0j3c5QP5IyWgZ2pzZEzRzvcxlqj6kr41VH981Oj9Xf7JW07I9SSt3cz6-v1toSt9T1gvxefd3xRfRE9Id1z0usQZANvqfC0dJ",
+    "LOG_CHANNEL": "stack",
+    "NEXMO_KEY": "258105d1",
+    "NEXMO_SECRET": "2ab72545e809f4bf",
+    "ONESIGNAL_APP_ID": "539b259b-05cb-40b9-b4f2-bd4873800d58",
+    "ONESIGNAL_REST_API_KEY": "ZmRlNzFhZjMtYWRlOS00OTQ4LTk5MWItOGNiN2MzYjU2YTk4",
+    "PUSHER_APP_CLUSTER": "us2",
+    "PUSHER_APP_ID": "491393",
+    "PUSHER_APP_KEY": "b1c9dfd0226ff506116d",
+    "PUSHER_APP_SECRET": "b5489d77641c1e4d77fb"
   },
   "formation": {
     "web": {

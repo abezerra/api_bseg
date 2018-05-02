@@ -46,9 +46,8 @@ class FriendlyInvite
     {
         try
         {
-            $this->validator->with($data)->passesOrFail();
             $action = $this->repository->create($data);
-            $this->notificationService->notify_invitation_friendly($data);
+            //$this->notificationService->notify_invitation_friendly($data);
             return [
                 'code' => 200,
                 'action' => $action,
