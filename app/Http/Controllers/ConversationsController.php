@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Auth;
 use App\Entities\Chats;
 use App\Entities\Client;
 use App\Entities\PushNotification;
@@ -59,6 +60,7 @@ class ConversationsController extends Controller
 
     public function store(ConversationCreateRequest $request)
     {
+      //dd(Auth::user()->id);
         try {
             $data = $request->all();
 
@@ -84,6 +86,7 @@ class ConversationsController extends Controller
             $user = (new User)->newQuery()->find($data['user_id']);
 
             $event = new ChatEvent($conversation, $user);
+          //  broadcast( new ChatEvent($conversation, $user))->toOthers();
 
 
             event($event);

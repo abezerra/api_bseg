@@ -17,6 +17,7 @@ Broadcast::channel('App.User.{id}', function ($user, $id) {
 
 Broadcast::channel('per-to-per-chat', function ($user, $id) {
     return true;
+    //return Auth::check();
 });
 
 //private chanell
