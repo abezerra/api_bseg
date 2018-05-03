@@ -31,7 +31,6 @@ class AuthController extends Controller
 
     public function details($cpf)
     {
-        //$user =  response()->json(['success' => Auth::user()], 200);
         return User::with(['client', 'notification', 'alerts'])->where('cpf', '=', $cpf)->get();
     }
 
