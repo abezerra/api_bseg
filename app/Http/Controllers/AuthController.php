@@ -13,13 +13,14 @@ class AuthController extends Controller
 
     public function auth(Request $request)
     {
-        $credentials = $request->only('email', 'password');
-        try
-        {
 
-                Auth::attempt($credentials);
-                $success['token'] = Auth::user()->createToken('bseg')->accessToken;
-                return response()->json(['success' => $success], 200);
+        try {
+
+            $credentials = $request->only('email', 'password');
+
+            Auth::attempt($credentials);
+            $success['token'] = Auth::user()->createToken('bseg')->accessToken;
+            return response()->json(['success' => $success], 200);
 
         } catch (\Exception $exception) {
             return response()->json(['error' => 'not acessde', 'cause' => $exception], 401);

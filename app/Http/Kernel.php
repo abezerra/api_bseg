@@ -62,4 +62,5 @@ class Kernel extends HttpKernel
         'cors' => \Barryvdh\Cors\HandleCors::class,
         'auth.check' => CheckRole::class,
     ];
+
 }
