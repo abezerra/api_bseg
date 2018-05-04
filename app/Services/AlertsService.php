@@ -31,7 +31,7 @@ class AlertsService
 
     public function index()
     {
-        return $this->repository->all();
+        return $this->repository->with(['user'])->all();
     }
 
     public function store(array $data)

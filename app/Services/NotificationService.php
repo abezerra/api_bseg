@@ -148,7 +148,7 @@ class NotificationService
             'message' => $data['name'].' Foi indicado',
             'user_id' => 17,
         ];
-        return $this->repository->create($notification);
+        return true; #$this->repository->create($notification);
     }
 
     public function push_notification()
