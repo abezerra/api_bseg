@@ -19,6 +19,7 @@ Route::get('dp', 'DepartamentsController@index')->middleware('auth:api');
 Route::group(['middleware' => ['cors']], function () {
     Route::post('authenticate', 'AuthController@auth');
     Route::get('authenticateds', 'AuthController@getAuthenticatedUser');
+    Route::post('signup', 'AuthController@signup');
 
     Route::group(['middleware' => ['auth:api']], function () {
 
