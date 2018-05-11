@@ -234,8 +234,8 @@ class TemplatingsController extends Controller
     public function image_templating(Request $request)
     {
         $data = $request->all();
-
-        $img = Image::make(public_path('images/default.jpg'));
+        $img = Image::make(public_path("images/{$data['image_name']}"));
+        //$img = Image::make(public_path('images/default.jpg'));
         $img->text($data['name'] . ' - ' . $data['phone'], 450, 850, function ($font) {
             $font->file(public_path('fonts/bar.ttf'));
             $font->size(26);
