@@ -234,8 +234,8 @@ class TemplatingsController extends Controller
     public function image_templating(Request $request)
     {
         $data = $request->all();
-
-        $img = Image::make(public_path('images/default.jpg'));
+        $img = Image::make(public_path("images/{$data['image_name']}"));
+        //$img = Image::make(public_path('images/default.jpg'));
         $img->text($data['name'] . ' - ' . $data['phone'], 450, 850, function ($font) {
             $font->file(public_path('fonts/bar.ttf'));
             $font->size(26);
@@ -246,11 +246,11 @@ class TemplatingsController extends Controller
         $imageName = md5('brasalimg') . '.jpg';
         $img->save(public_path('img/' . $imageName));
 
-        $data['media_name'] = "http://api-bseg.brasal.com.br/{$imageName}";
+        $data['media_name'] = "https://api-bseg.brasal.com.br/img/{$imageName}";
         $data['user_id'] = 11;
 
         return [
-            'path' => 'http://api-bseg.brasal.com.br/' . $imageName
+            'path' => 'https://api-bseg.brasal.com.br/img/' . $imageName
         ];
 
     }
