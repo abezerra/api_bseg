@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Dotenv\Exception\ValidationException;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
@@ -68,25 +69,38 @@ class MailersController extends Controller
      */
     public function store(MailerCreateRequest $request)
     {
+        $data = $request->all();
         try {
+            for ($i = 0; $i < count($data['to']); ++$i) {
+                $view_name = md5(date("D M j G:i:s T Y"));
+                $template = fopen(resource_path('views/mails/' . $view_name . '.blade.php'), 'w') or die("No permissions!");
 
-            //$this->validator->with($request->all())->passesOrFail(ValidatorInterface::RULE_CREATE);
+                $extends = "@extends('layouts.basic')";
+                fwrite($template, $extends);
+                $start_body = "@section('content')";
+                fwrite($template, $start_body);
+                $to = $data['to'][$i];
+                if (isset($to['name'])) {
+                    $data['content'] = str_replace("#nome#", $to['name'], $data['content']);
+                }
 
-            $mailer = $this->repository->create($request->all());
+                fwrite($template, $data['content']);
+                $end_body = "@endsection";
+                fwrite($template, $end_body);
 
-            $response = [
-                'message' => 'Mailer created.',
-                'data' => $mailer->toArray(),
-            ];
+                Mail::send(('mails/' . $view_name), ["subject" => $data['subject'], 'content' => $data['content']], function ($message) use ($data, $i, $to) {
+                    $message->subject($data['subject']);
+                    $message->from('sistemas@brasal.com.br', 'Alessandra mingau');
+                    $message->to($to);
+                });
 
-            return response()->json($response);
-        } catch (ValidatorException $e) {
 
-            return response()->json([
+            }
+        } catch (ValidationException $exception) {
+            return [
                 'error' => true,
-                'message' => $e->getMessageBag()
-            ]);
-
+                'message' => $exception->getMessage()
+            ];
         }
     }
 

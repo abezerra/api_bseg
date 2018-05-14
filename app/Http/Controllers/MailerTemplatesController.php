@@ -80,7 +80,7 @@ class MailerTemplatesController extends Controller
                 'name' => $data['name'],
                 'description'=> $data['description'],
                 'file_name' => $file_name,
-                'file_path' => env('APP_URL') . '/api/mailer/template/' . $file_name ,
+                'file_path' => env('APP_URL') . '/mailer/template/' . $file_name ,
                 'created_by' => \Auth::user()->id,
             ]);
 
