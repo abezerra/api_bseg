@@ -97,5 +97,24 @@ class User extends Authenticatable
         return $this->hasMany(PushNotification::class, 'sended_by');
     }
 
+    public function mail_template()
+    {
+        return $this->hasMany(MailerTemplate::class, 'created_by');
+    }
+
+    public function mail_list()
+    {
+        return $this->hasMany(MailerList::class, 'created_by');
+    }
+
+    public function sms_list()
+    {
+        return $this->hasMany(SMSList::class, 'created_by');
+    }
+
+    public function sms_template()
+    {
+        return $this->hasMany(SMSTemplate::class, 'created_by');
+    }
 
 }

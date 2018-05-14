@@ -207,6 +207,17 @@ Route::group(['middleware' => ['cors']], function () {
             Route::post('/push', 'ConversationsController@push');
         });
 
+        Route::group(['prefix' => 'mailer'], function () {
+            Route::get('/templates', 'MailerTemplatesController@index');
+            Route::get('/templates/paginated', 'MailerTemplatesController@paginated');
+            Route::post('/templates', 'MailerTemplatesController@store');
+            Route::get('/templates/{id}', 'MailerTemplatesController@show');
+            Route::delete('/templates/{id}', 'MailerTemplatesController@destroy');
+            Route::get('/conversations/{id}', 'ClientsController@show');
+            Route::post('', 'ConversationsController@store');
+            Route::post('/push', 'ConversationsController@push');
+        });
+
     });
 });
 
