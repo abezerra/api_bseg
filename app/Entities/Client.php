@@ -71,4 +71,13 @@ class Client extends Model implements Transformable
         return $this->hasMany(AutoInsurance::class, 'client_id');
     }
 
+    public function mail_list()
+    {
+        return $this->hasMany(MailerList::class, 'client_id');
+    }
+
+    public function sms_list()
+    {
+        return $this->hasMany(Client::class, 'client_id');
+    }
 }

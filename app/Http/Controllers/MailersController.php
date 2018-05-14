@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use Dotenv\Exception\ValidationException;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
+use Illuminate\Support\Facades\Mail;
 use Prettus\Validator\Contracts\ValidatorInterface;
 use Prettus\Validator\Exceptions\ValidatorException;
 use App\Http\Requests\MailerCreateRequest;
@@ -38,7 +40,7 @@ class MailersController extends Controller
     public function __construct(MailerRepository $repository, MailerValidator $validator)
     {
         $this->repository = $repository;
-        $this->validator  = $validator;
+        $this->validator = $validator;
     }
 
     /**
@@ -48,17 +50,12 @@ class MailersController extends Controller
      */
     public function index()
     {
-        $this->repository->pushCriteria(app('Prettus\Repository\Criteria\RequestCriteria'));
-        $mailers = $this->repository->all();
+        return $this->repository->all();
+    }
 
-        if (request()->wantsJson()) {
-
-            return response()->json([
-                'data' => $mailers,
-            ]);
-        }
-
-        return view('mailers.index', compact('mailers'));
+    public function paginated()
+    {
+        return $this->repository->paginate(5);
     }
 
     /**
@@ -72,32 +69,38 @@ class MailersController extends Controller
      */
     public function store(MailerCreateRequest $request)
     {
+        $data = $request->all();
         try {
+            for ($i = 0; $i < count($data['to']); ++$i) {
+                $view_name = md5(date("D M j G:i:s T Y"));
+                $template = fopen(resource_path('views/mails/' . $view_name . '.blade.php'), 'w') or die("No permissions!");
 
-            $this->validator->with($request->all())->passesOrFail(ValidatorInterface::RULE_CREATE);
+                $extends = "@extends('layouts.basic')";
+                fwrite($template, $extends);
+                $start_body = "@section('content')";
+                fwrite($template, $start_body);
+                $to = $data['to'][$i];
+                if (isset($to['name'])) {
+                    $data['content'] = str_replace("#nome#", $to['name'], $data['content']);
+                }
 
-            $mailer = $this->repository->create($request->all());
+                fwrite($template, $data['content']);
+                $end_body = "@endsection";
+                fwrite($template, $end_body);
 
-            $response = [
-                'message' => 'Mailer created.',
-                'data'    => $mailer->toArray(),
+                Mail::send(('mails/' . $view_name), ["subject" => $data['subject'], 'content' => $data['content']], function ($message) use ($data, $i, $to) {
+                    $message->subject($data['subject']);
+                    $message->from('sistemas@brasal.com.br', 'Alessandra mingau');
+                    $message->to($to);
+                });
+
+
+            }
+        } catch (ValidationException $exception) {
+            return [
+                'error' => true,
+                'message' => $exception->getMessage()
             ];
-
-            if ($request->wantsJson()) {
-
-                return response()->json($response);
-            }
-
-            return redirect()->back()->with('message', $response['message']);
-        } catch (ValidatorException $e) {
-            if ($request->wantsJson()) {
-                return response()->json([
-                    'error'   => true,
-                    'message' => $e->getMessageBag()
-                ]);
-            }
-
-            return redirect()->back()->withErrors($e->getMessageBag())->withInput();
         }
     }
 
@@ -140,7 +143,7 @@ class MailersController extends Controller
      * Update the specified resource in storage.
      *
      * @param  MailerUpdateRequest $request
-     * @param  string            $id
+     * @param  string $id
      *
      * @return Response
      *
@@ -156,7 +159,7 @@ class MailersController extends Controller
 
             $response = [
                 'message' => 'Mailer updated.',
-                'data'    => $mailer->toArray(),
+                'data' => $mailer->toArray(),
             ];
 
             if ($request->wantsJson()) {
@@ -170,7 +173,7 @@ class MailersController extends Controller
             if ($request->wantsJson()) {
 
                 return response()->json([
-                    'error'   => true,
+                    'error' => true,
                     'message' => $e->getMessageBag()
                 ]);
             }
@@ -200,5 +203,15 @@ class MailersController extends Controller
         }
 
         return redirect()->back()->with('message', 'Mailer deleted.');
+    }
+
+    public function send_tes()
+    {
+        $data = [];
+        Mail::raw('Mensafgem de testes', function ($message) use ($data) {
+            $message->subject('assunto da mensagem de testes');
+            $message->from('sistemas@brasal.com.br', 'ytvsdghbfsdvagbhfdsubhfhjbfdsugvbfsdhfgjds');
+            $message->to('guaracyaraujolima@gmail.com');
+        });
     }
 }

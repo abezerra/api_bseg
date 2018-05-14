@@ -53,6 +53,10 @@ class RepositoryServiceProvider extends ServiceProvider
         $this->app->bind(\App\Repositories\ConversationRepository::class, \App\Repositories\ConversationRepositoryEloquent::class);
         $this->app->bind(\App\Repositories\ChatsRepository::class, \App\Repositories\ChatsRepositoryEloquent::class);
         $this->app->bind(\App\Repositories\PushNotificationRepository::class, \App\Repositories\PushNotificationRepositoryEloquent::class);
+        $this->app->bind(\App\Repositories\MailerTemplateRepository::class, \App\Repositories\MailerTemplateRepositoryEloquent::class);
+        $this->app->bind(\App\Repositories\MailerListRepository::class, \App\Repositories\MailerListRepositoryEloquent::class);
+        $this->app->bind(\App\Repositories\SMSTemplateRepository::class, \App\Repositories\SMSTemplateRepositoryEloquent::class);
+        $this->app->bind(\App\Repositories\SMSListRepository::class, \App\Repositories\SMSListRepositoryEloquent::class);
         //:end-bindings:
     }
 }

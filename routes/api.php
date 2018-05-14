@@ -207,6 +207,45 @@ Route::group(['middleware' => ['cors']], function () {
             Route::post('/push', 'ConversationsController@push');
         });
 
+        Route::group(['prefix' => 'mailer'], function () {
+            Route::get('', 'MailersController@index');
+            Route::get('/send_tes', 'MailersController@send_tes');
+            Route::get('/paginated', 'MailersController@paginated');
+            Route::post('', 'MailersController@store');
+            Route::get('/{id}', 'MailersController@show');
+            Route::delete('/{id}', 'MailersController@destroy');
+
+            Route::get('/templates', 'MailerTemplatesController@index');
+            Route::get('/templates/paginated', 'MailerTemplatesController@paginated');
+            Route::post('/templates', 'MailerTemplatesController@store');
+            Route::get('/templates/{id}', 'MailerTemplatesController@show');
+            Route::delete('/templates/{id}', 'MailerTemplatesController@destroy');
+
+            Route::get('/lists', 'MailerListsController@index');
+            Route::get('/lists/paginated', 'MailerListsController@paginated');
+            Route::post('/lists', 'MailerListsController@store');
+            Route::get('/lists/{id}', 'MailerListsController@show');
+            Route::put('/lists/{id}', 'MailerListsController@update');
+            Route::delete('/lists/{id}', 'MailerListsController@destroy');
+
+        });
+
+        Route::group(['prefix' => 'text_messages'], function () {
+            Route::get('/templates', 'SMSTemplatesController@index');
+            Route::get('/templates/paginated', 'SMSTemplatesController@paginated');
+            Route::post('/templates', 'SMSTemplatesController@store');
+            Route::get('/templates/{id}', 'SMSTemplatesController@show');
+            Route::delete('/templates/{id}', 'SMSTemplatesController@destroy');
+
+            Route::get('/lists', 'SMSListsController@index');
+            Route::get('/lists/paginated', 'SMSListsController@paginated');
+            Route::post('/lists', 'SMSListsController@store');
+            Route::get('/lists/{id}', 'SMSListsController@show');
+            Route::put('/lists/{id}', 'SMSListsController@update');
+            Route::delete('/lists/{id}', 'SMSListsController@destroy');
+
+        });
+
     });
 });
 
