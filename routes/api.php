@@ -208,6 +208,13 @@ Route::group(['middleware' => ['cors']], function () {
         });
 
         Route::group(['prefix' => 'mailer'], function () {
+            Route::get('', 'MailersController@index');
+            Route::get('/send_tes', 'MailersController@send_tes');
+            Route::get('/paginated', 'MailersController@paginated');
+            Route::post('', 'MailersController@store');
+            Route::get('/{id}', 'MailersController@show');
+            Route::delete('/{id}', 'MailersController@destroy');
+
             Route::get('/templates', 'MailerTemplatesController@index');
             Route::get('/templates/paginated', 'MailerTemplatesController@paginated');
             Route::post('/templates', 'MailerTemplatesController@store');

@@ -77,8 +77,10 @@ class MailerTemplatesController extends Controller
             fwrite($template, $data['content']);
             fclose($template);
             $mailerTemplate =MailerTemplate::create([
+                'name' => $data['name'],
+                'description'=> $data['description'],
                 'file_name' => $file_name,
-                'file_path' => resource_path('views/mails/' . $file_name . '.blade.php'),
+                'file_path' => env('APP_URL') . '/api/mailer/template/' . $file_name ,
                 'created_by' => \Auth::user()->id,
             ]);
 
@@ -159,5 +161,10 @@ class MailerTemplatesController extends Controller
             'message' => 'MailerTemplate deleted.',
             'deleted' => $deleted,
         ]);
+    }
+
+    public function template($name)
+    {
+        return view('/mails/' . $name);
     }
 }

@@ -21,6 +21,8 @@ class MailerTemplate extends Model implements Transformable
      * @var array
      */
     protected $fillable = [
+        'name',
+        'description',
         'file_name',
         'file_path',
         'created_by',

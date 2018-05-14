@@ -54,3 +54,8 @@ Route::get('/terminar-pagamento', function () {
     $k = \FCM::sendTo($token, null, $notification, $data);
     dd($k);
 });
+
+
+Route::group(['prefix' => 'mailer'], function () {
+    Route::get('/template/{view_name}', 'MailerTemplatesController@template');
+});

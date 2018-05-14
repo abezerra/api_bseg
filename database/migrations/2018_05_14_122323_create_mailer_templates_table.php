@@ -17,6 +17,8 @@ class CreateMailerTemplatesTable extends Migration
 	{
 		Schema::create('mailer_templates', function(Blueprint $table) {
             $table->increments('id');
+            $table->string('name');
+            $table->string('description');
             $table->string('file_name');
             $table->string('file_path');
             $table->integer('created_by')->unsigned();
