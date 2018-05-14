@@ -11,6 +11,7 @@ use App\Http\Requests\SMSTemplateCreateRequest;
 use App\Http\Requests\SMSTemplateUpdateRequest;
 use App\Repositories\SMSTemplateRepository;
 use App\Validators\SMSTemplateValidator;
+use App\Entities\SMSTemplate;
 
 /**
  * Class SMSTemplatesController.
@@ -38,7 +39,7 @@ class SMSTemplatesController extends Controller
     public function __construct(SMSTemplateRepository $repository, SMSTemplateValidator $validator)
     {
         $this->repository = $repository;
-        $this->validator  = $validator;
+        $this->validator = $validator;
     }
 
     /**
@@ -48,17 +49,12 @@ class SMSTemplatesController extends Controller
      */
     public function index()
     {
-        $this->repository->pushCriteria(app('Prettus\Repository\Criteria\RequestCriteria'));
-        $sMSTemplates = $this->repository->all();
+        return $this->repository->all();
+    }
 
-        if (request()->wantsJson()) {
-
-            return response()->json([
-                'data' => $sMSTemplates,
-            ]);
-        }
-
-        return view('sMSTemplates.index', compact('sMSTemplates'));
+    public function paginated()
+    {
+        return $this->repository->paginate(5);
     }
 
     /**
@@ -72,32 +68,30 @@ class SMSTemplatesController extends Controller
      */
     public function store(SMSTemplateCreateRequest $request)
     {
+        $data = $request->all();
         try {
 
-            $this->validator->with($request->all())->passesOrFail(ValidatorInterface::RULE_CREATE);
+            $this->validator->with($data)->passesOrFail(ValidatorInterface::RULE_CREATE);
 
-            $sMSTemplate = $this->repository->create($request->all());
+
+            $sMSTemplate = SMSTemplate::create([
+                'name' => $data['name'],
+                'description' => $data['description'],
+                'content' => $data['content'],
+                'created_by' => \Auth::user()->id,
+            ]);
 
             $response = [
                 'message' => 'SMSTemplate created.',
-                'data'    => $sMSTemplate->toArray(),
+                'data' => $sMSTemplate->toArray(),
             ];
 
-            if ($request->wantsJson()) {
-
-                return response()->json($response);
-            }
-
-            return redirect()->back()->with('message', $response['message']);
+            return response()->json($response);
         } catch (ValidatorException $e) {
-            if ($request->wantsJson()) {
-                return response()->json([
-                    'error'   => true,
-                    'message' => $e->getMessageBag()
-                ]);
-            }
-
-            return redirect()->back()->withErrors($e->getMessageBag())->withInput();
+            return response()->json([
+                'error' => true,
+                'message' => $e->getMessageBag()
+            ]);
         }
     }
 
@@ -110,37 +104,15 @@ class SMSTemplatesController extends Controller
      */
     public function show($id)
     {
-        $sMSTemplate = $this->repository->find($id);
-
-        if (request()->wantsJson()) {
-
-            return response()->json([
-                'data' => $sMSTemplate,
-            ]);
-        }
-
-        return view('sMSTemplates.show', compact('sMSTemplate'));
+        return $this->repository->find($id);
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int $id
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        $sMSTemplate = $this->repository->find($id);
-
-        return view('sMSTemplates.edit', compact('sMSTemplate'));
-    }
 
     /**
      * Update the specified resource in storage.
      *
      * @param  SMSTemplateUpdateRequest $request
-     * @param  string            $id
+     * @param  string $id
      *
      * @return Response
      *
@@ -148,34 +120,25 @@ class SMSTemplatesController extends Controller
      */
     public function update(SMSTemplateUpdateRequest $request, $id)
     {
+        $data = $request->all();
+        $data['created_by'] = \Auth::user()->id;
         try {
 
-            $this->validator->with($request->all())->passesOrFail(ValidatorInterface::RULE_UPDATE);
+            $this->validator->with($data)->passesOrFail(ValidatorInterface::RULE_UPDATE);
 
-            $sMSTemplate = $this->repository->update($request->all(), $id);
+            $sMSTemplate = $this->repository->update($data, $id);
 
             $response = [
                 'message' => 'SMSTemplate updated.',
-                'data'    => $sMSTemplate->toArray(),
+                'data' => $sMSTemplate->toArray(),
             ];
 
-            if ($request->wantsJson()) {
-
-                return response()->json($response);
-            }
-
-            return redirect()->back()->with('message', $response['message']);
+            return response()->json($response);
         } catch (ValidatorException $e) {
-
-            if ($request->wantsJson()) {
-
-                return response()->json([
-                    'error'   => true,
-                    'message' => $e->getMessageBag()
-                ]);
-            }
-
-            return redirect()->back()->withErrors($e->getMessageBag())->withInput();
+            return response()->json([
+                'error' => true,
+                'message' => $e->getMessageBag()
+            ]);
         }
     }
 
@@ -191,14 +154,10 @@ class SMSTemplatesController extends Controller
     {
         $deleted = $this->repository->delete($id);
 
-        if (request()->wantsJson()) {
+        return response()->json([
+            'message' => 'SMSTemplate deleted.',
+            'deleted' => $deleted,
+        ]);
 
-            return response()->json([
-                'message' => 'SMSTemplate deleted.',
-                'deleted' => $deleted,
-            ]);
-        }
-
-        return redirect()->back()->with('message', 'SMSTemplate deleted.');
     }
 }

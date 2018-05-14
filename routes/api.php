@@ -224,11 +224,11 @@ Route::group(['middleware' => ['cors']], function () {
         });
 
         Route::group(['prefix' => 'text_messages'], function () {
-            Route::get('/templates', 'MailerTemplatesController@index');
-            Route::get('/templates/paginated', 'MailerTemplatesController@paginated');
-            Route::post('/templates', 'MailerTemplatesController@store');
-            Route::get('/templates/{id}', 'MailerTemplatesController@show');
-            Route::delete('/templates/{id}', 'MailerTemplatesController@destroy');
+            Route::get('/templates', 'SMSTemplatesController@index');
+            Route::get('/templates/paginated', 'SMSTemplatesController@paginated');
+            Route::post('/templates', 'SMSTemplatesController@store');
+            Route::get('/templates/{id}', 'SMSTemplatesController@show');
+            Route::delete('/templates/{id}', 'SMSTemplatesController@destroy');
 
             Route::get('/lists', 'MailerListsController@index');
             Route::get('/lists/paginated', 'MailerListsController@paginated');
