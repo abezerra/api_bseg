@@ -213,9 +213,30 @@ Route::group(['middleware' => ['cors']], function () {
             Route::post('/templates', 'MailerTemplatesController@store');
             Route::get('/templates/{id}', 'MailerTemplatesController@show');
             Route::delete('/templates/{id}', 'MailerTemplatesController@destroy');
-            Route::get('/conversations/{id}', 'ClientsController@show');
-            Route::post('', 'ConversationsController@store');
-            Route::post('/push', 'ConversationsController@push');
+
+            Route::get('/lists', 'MailerListsController@index');
+            Route::get('/lists/paginated', 'MailerListsController@paginated');
+            Route::post('/lists', 'MailerListsController@store');
+            Route::get('/lists/{id}', 'MailerListsController@show');
+            Route::put('/lists/{id}', 'MailerListsController@update');
+            Route::delete('/lists/{id}', 'MailerListsController@destroy');
+
+        });
+
+        Route::group(['prefix' => 'text_messages'], function () {
+            Route::get('/templates', 'MailerTemplatesController@index');
+            Route::get('/templates/paginated', 'MailerTemplatesController@paginated');
+            Route::post('/templates', 'MailerTemplatesController@store');
+            Route::get('/templates/{id}', 'MailerTemplatesController@show');
+            Route::delete('/templates/{id}', 'MailerTemplatesController@destroy');
+
+            Route::get('/lists', 'MailerListsController@index');
+            Route::get('/lists/paginated', 'MailerListsController@paginated');
+            Route::post('/lists', 'MailerListsController@store');
+            Route::get('/lists/{id}', 'MailerListsController@show');
+            Route::put('/lists/{id}', 'MailerListsController@update');
+            Route::delete('/lists/{id}', 'MailerListsController@destroy');
+
         });
 
     });

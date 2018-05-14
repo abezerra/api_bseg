@@ -38,7 +38,7 @@ class MailerListsController extends Controller
     public function __construct(MailerListRepository $repository, MailerListValidator $validator)
     {
         $this->repository = $repository;
-        $this->validator  = $validator;
+        $this->validator = $validator;
     }
 
     /**
@@ -48,17 +48,12 @@ class MailerListsController extends Controller
      */
     public function index()
     {
-        $this->repository->pushCriteria(app('Prettus\Repository\Criteria\RequestCriteria'));
-        $mailerLists = $this->repository->all();
+        return $this->repository->all();
+    }
 
-        if (request()->wantsJson()) {
-
-            return response()->json([
-                'data' => $mailerLists,
-            ]);
-        }
-
-        return view('mailerLists.index', compact('mailerLists'));
+    public function paginated()
+    {
+        return $this->repository->paginate(5);
     }
 
     /**
@@ -80,24 +75,17 @@ class MailerListsController extends Controller
 
             $response = [
                 'message' => 'MailerList created.',
-                'data'    => $mailerList->toArray(),
+                'data' => $mailerList->toArray(),
             ];
 
-            if ($request->wantsJson()) {
+            return response()->json($response);
 
-                return response()->json($response);
-            }
-
-            return redirect()->back()->with('message', $response['message']);
         } catch (ValidatorException $e) {
-            if ($request->wantsJson()) {
-                return response()->json([
-                    'error'   => true,
-                    'message' => $e->getMessageBag()
-                ]);
-            }
+            return response()->json([
+                'error' => true,
+                'message' => $e->getMessageBag()
+            ]);
 
-            return redirect()->back()->withErrors($e->getMessageBag())->withInput();
         }
     }
 
@@ -110,37 +98,15 @@ class MailerListsController extends Controller
      */
     public function show($id)
     {
-        $mailerList = $this->repository->find($id);
-
-        if (request()->wantsJson()) {
-
-            return response()->json([
-                'data' => $mailerList,
-            ]);
-        }
-
-        return view('mailerLists.show', compact('mailerList'));
+        return $this->repository->find($id);
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int $id
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        $mailerList = $this->repository->find($id);
-
-        return view('mailerLists.edit', compact('mailerList'));
-    }
 
     /**
      * Update the specified resource in storage.
      *
      * @param  MailerListUpdateRequest $request
-     * @param  string            $id
+     * @param  string $id
      *
      * @return Response
      *
@@ -156,26 +122,17 @@ class MailerListsController extends Controller
 
             $response = [
                 'message' => 'MailerList updated.',
-                'data'    => $mailerList->toArray(),
+                'data' => $mailerList->toArray(),
             ];
 
-            if ($request->wantsJson()) {
-
-                return response()->json($response);
-            }
-
-            return redirect()->back()->with('message', $response['message']);
+            return response()->json($response);
         } catch (ValidatorException $e) {
 
-            if ($request->wantsJson()) {
+            return response()->json([
+                'error' => true,
+                'message' => $e->getMessageBag()
+            ]);
 
-                return response()->json([
-                    'error'   => true,
-                    'message' => $e->getMessageBag()
-                ]);
-            }
-
-            return redirect()->back()->withErrors($e->getMessageBag())->withInput();
         }
     }
 
@@ -191,14 +148,10 @@ class MailerListsController extends Controller
     {
         $deleted = $this->repository->delete($id);
 
-        if (request()->wantsJson()) {
+        return response()->json([
+            'message' => 'MailerList deleted.',
+            'deleted' => $deleted,
+        ]);
 
-            return response()->json([
-                'message' => 'MailerList deleted.',
-                'deleted' => $deleted,
-            ]);
-        }
-
-        return redirect()->back()->with('message', 'MailerList deleted.');
     }
 }
