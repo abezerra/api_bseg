@@ -38,7 +38,7 @@ class SMSListsController extends Controller
     public function __construct(SMSListRepository $repository, SMSListValidator $validator)
     {
         $this->repository = $repository;
-        $this->validator  = $validator;
+        $this->validator = $validator;
     }
 
     /**
@@ -48,17 +48,12 @@ class SMSListsController extends Controller
      */
     public function index()
     {
-        $this->repository->pushCriteria(app('Prettus\Repository\Criteria\RequestCriteria'));
-        $sMSLists = $this->repository->all();
+        return $this->repository->all();
+    }
 
-        if (request()->wantsJson()) {
-
-            return response()->json([
-                'data' => $sMSLists,
-            ]);
-        }
-
-        return view('sMSLists.index', compact('sMSLists'));
+    public function pagianted()
+    {
+        return $this->repository->paginate(5);
     }
 
     /**
@@ -72,32 +67,26 @@ class SMSListsController extends Controller
      */
     public function store(SMSListCreateRequest $request)
     {
+        $data = $request->all();
+        $data['created_by'] = \Auth::user()->id;
         try {
 
-            $this->validator->with($request->all())->passesOrFail(ValidatorInterface::RULE_CREATE);
+            $this->validator->with($data)->passesOrFail(ValidatorInterface::RULE_CREATE);
 
-            $sMSList = $this->repository->create($request->all());
+            $sMSList = $this->repository->create($data);
 
             $response = [
                 'message' => 'SMSList created.',
-                'data'    => $sMSList->toArray(),
+                'data' => $sMSList->toArray(),
             ];
 
-            if ($request->wantsJson()) {
+            return response()->json($response);
 
-                return response()->json($response);
-            }
-
-            return redirect()->back()->with('message', $response['message']);
         } catch (ValidatorException $e) {
-            if ($request->wantsJson()) {
-                return response()->json([
-                    'error'   => true,
-                    'message' => $e->getMessageBag()
-                ]);
-            }
-
-            return redirect()->back()->withErrors($e->getMessageBag())->withInput();
+            return response()->json([
+                'error' => true,
+                'message' => $e->getMessageBag()
+            ]);
         }
     }
 
@@ -110,37 +99,15 @@ class SMSListsController extends Controller
      */
     public function show($id)
     {
-        $sMSList = $this->repository->find($id);
-
-        if (request()->wantsJson()) {
-
-            return response()->json([
-                'data' => $sMSList,
-            ]);
-        }
-
-        return view('sMSLists.show', compact('sMSList'));
+        return $this->repository->find($id);
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int $id
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        $sMSList = $this->repository->find($id);
-
-        return view('sMSLists.edit', compact('sMSList'));
-    }
 
     /**
      * Update the specified resource in storage.
      *
      * @param  SMSListUpdateRequest $request
-     * @param  string            $id
+     * @param  string $id
      *
      * @return Response
      *
@@ -156,26 +123,17 @@ class SMSListsController extends Controller
 
             $response = [
                 'message' => 'SMSList updated.',
-                'data'    => $sMSList->toArray(),
+                'data' => $sMSList->toArray(),
             ];
 
-            if ($request->wantsJson()) {
+            return response()->json($response);
 
-                return response()->json($response);
-            }
-
-            return redirect()->back()->with('message', $response['message']);
         } catch (ValidatorException $e) {
 
-            if ($request->wantsJson()) {
-
-                return response()->json([
-                    'error'   => true,
-                    'message' => $e->getMessageBag()
-                ]);
-            }
-
-            return redirect()->back()->withErrors($e->getMessageBag())->withInput();
+            return response()->json([
+                'error' => true,
+                'message' => $e->getMessageBag()
+            ]);
         }
     }
 
@@ -191,14 +149,10 @@ class SMSListsController extends Controller
     {
         $deleted = $this->repository->delete($id);
 
-        if (request()->wantsJson()) {
+        return response()->json([
+            'message' => 'SMSList deleted.',
+            'deleted' => $deleted,
+        ]);
 
-            return response()->json([
-                'message' => 'SMSList deleted.',
-                'deleted' => $deleted,
-            ]);
-        }
-
-        return redirect()->back()->with('message', 'SMSList deleted.');
     }
 }

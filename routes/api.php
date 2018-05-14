@@ -230,12 +230,12 @@ Route::group(['middleware' => ['cors']], function () {
             Route::get('/templates/{id}', 'SMSTemplatesController@show');
             Route::delete('/templates/{id}', 'SMSTemplatesController@destroy');
 
-            Route::get('/lists', 'MailerListsController@index');
-            Route::get('/lists/paginated', 'MailerListsController@paginated');
-            Route::post('/lists', 'MailerListsController@store');
-            Route::get('/lists/{id}', 'MailerListsController@show');
-            Route::put('/lists/{id}', 'MailerListsController@update');
-            Route::delete('/lists/{id}', 'MailerListsController@destroy');
+            Route::get('/lists', 'SMSListsController@index');
+            Route::get('/lists/paginated', 'SMSListsController@paginated');
+            Route::post('/lists', 'SMSListsController@store');
+            Route::get('/lists/{id}', 'SMSListsController@show');
+            Route::put('/lists/{id}', 'SMSListsController@update');
+            Route::delete('/lists/{id}', 'SMSListsController@destroy');
 
         });
 
