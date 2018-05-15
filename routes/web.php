@@ -57,5 +57,5 @@ Route::get('/terminar-pagamento', function () {
 
 
 Route::group(['prefix' => 'mailer'], function () {
-    Route::get('/template/{view_name}', 'MailerTemplatesController@template');
+    Route::get('/template', 'MailerTemplatesController@template');
 });

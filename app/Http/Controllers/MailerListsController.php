@@ -53,7 +53,7 @@ class MailerListsController extends Controller
 
     public function paginated()
     {
-        return $this->repository->paginate(5);
+        return $this->repository->with(['user', 'participants', 'client'])->paginate(5);
     }
 
     /**
@@ -98,7 +98,7 @@ class MailerListsController extends Controller
      */
     public function show($id)
     {
-        return $this->repository->find($id);
+        return $this->repository->with(['user', 'participants', 'client'])->find($id);
     }
 
 
