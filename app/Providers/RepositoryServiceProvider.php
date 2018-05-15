@@ -57,6 +57,7 @@ class RepositoryServiceProvider extends ServiceProvider
         $this->app->bind(\App\Repositories\MailerListRepository::class, \App\Repositories\MailerListRepositoryEloquent::class);
         $this->app->bind(\App\Repositories\SMSTemplateRepository::class, \App\Repositories\SMSTemplateRepositoryEloquent::class);
         $this->app->bind(\App\Repositories\SMSListRepository::class, \App\Repositories\SMSListRepositoryEloquent::class);
+        $this->app->bind(\App\Repositories\MailerListParticipantRepository::class, \App\Repositories\MailerListParticipantRepositoryEloquent::class);
         //:end-bindings:
     }
 }

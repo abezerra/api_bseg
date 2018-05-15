@@ -4,9 +4,9 @@ use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
 /**
- * Class CreateMailerListsTable.
+ * Class CreateMailerListParticipantsTable.
  */
-class CreateMailerListsTable extends Migration
+class CreateMailerListParticipantsTable extends Migration
 {
 	/**
 	 * Run the migrations.
@@ -15,11 +15,11 @@ class CreateMailerListsTable extends Migration
 	 */
 	public function up()
 	{
-		Schema::create('mailer_lists', function(Blueprint $table) {
+		Schema::create('mailer_list_participants', function(Blueprint $table) {
             $table->increments('id');
-            $table->string('name');
-            $table->string('description');
-            $table->integer('client_id')->unsigned()->nullable();
+            $table->integer('mailer_lists_id')->unsigned();
+            $table->foreign('mailer_lists_id')->references('id')->on('mailer_lists');
+            $table->integer('client_id')->unsigned();
             $table->foreign('client_id')->references('id')->on('clients');
             $table->integer('created_by')->unsigned();
             $table->foreign('created_by')->references('id')->on('users');
@@ -34,6 +34,6 @@ class CreateMailerListsTable extends Migration
 	 */
 	public function down()
 	{
-		Schema::drop('mailer_lists');
+		Schema::drop('mailer_list_participants');
 	}
 }

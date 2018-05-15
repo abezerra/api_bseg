@@ -80,4 +80,9 @@ class Client extends Model implements Transformable
     {
         return $this->hasMany(Client::class, 'client_id');
     }
+
+    public function participant()
+    {
+        return $this->hasMany(MailerListParticipant::class, 'client_id');
+    }
 }

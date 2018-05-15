@@ -7,11 +7,11 @@ use Prettus\Repository\Contracts\Transformable;
 use Prettus\Repository\Traits\TransformableTrait;
 
 /**
- * Class MailerList.
+ * Class MailerListParticipant.
  *
  * @package namespace App\Entities;
  */
-class MailerList extends Model implements Transformable
+class MailerListParticipant extends Model implements Transformable
 {
     use TransformableTrait;
 
@@ -21,15 +21,14 @@ class MailerList extends Model implements Transformable
      * @var array
      */
     protected $fillable = [
-        'name',
-        'description',
+        'mailer_lists_id',
         'client_id',
-        'created_by'
+        'created_by',
     ];
 
-    public function user()
+    public function listy()
     {
-        return $this->belongsTo(User::class, 'created_by');
+        return $this->belongsTo(MailerList::class, 'mailer_lists_id');
     }
 
     public function client()
@@ -37,8 +36,9 @@ class MailerList extends Model implements Transformable
         return $this->belongsTo(Client::class, 'client_id');
     }
 
-    public function participants()
+    public function users()
     {
-        return $this->hasMany(MailerListParticipant::class, 'mailer_lists_id');
+        return $this->belongsTo(User::class, 'created_by');
     }
+
 }

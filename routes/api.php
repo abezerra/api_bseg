@@ -223,13 +223,13 @@ Route::group(['middleware' => ['cors']], function () {
 
             Route::get('/lists', 'MailerListsController@index');
             Route::get('/lists/paginated', 'MailerListsController@paginated');
-            Route::post('/lists', 'MailerListsController@store');
-            Route::get('/lists/{id}', 'MailerListsController@show');
+            Route::post('/lists', 'MailerListParticipantsController@store');
+            Route::get('/lists/{id}', 'MailerListParticipantsController@show');
             Route::put('/lists/{id}', 'MailerListsController@update');
             Route::delete('/lists/{id}', 'MailerListsController@destroy');
 
         });
-
+        Route::get('maiu/listas', 'MailerListsController@index');
         Route::group(['prefix' => 'text_messages'], function () {
             Route::get('/templates', 'SMSTemplatesController@index');
             Route::get('/templates/paginated', 'SMSTemplatesController@paginated');

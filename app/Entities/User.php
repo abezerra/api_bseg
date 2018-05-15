@@ -117,4 +117,8 @@ class User extends Authenticatable
         return $this->hasMany(SMSTemplate::class, 'created_by');
     }
 
+    public function participants()
+    {
+        return $this->hasMany(MailerListParticipant::class, 'created_by');
+    }
 }
