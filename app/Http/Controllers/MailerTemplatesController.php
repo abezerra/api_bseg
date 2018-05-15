@@ -163,8 +163,10 @@ class MailerTemplatesController extends Controller
         ]);
     }
 
-    public function template($name)
+    //public function template($name)
+    public function template()
     {
-        return view('/mails/' . $name);
+        //return view('/mails/' . $name);
+        return view('friendly');
     }
 }

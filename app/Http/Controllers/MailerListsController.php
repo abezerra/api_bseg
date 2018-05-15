@@ -48,7 +48,7 @@ class MailerListsController extends Controller
      */
     public function index()
     {
-        return $this->repository->with(['user', 'participants', 'client'])->all();
+        return $this->repository->all();
     }
 
     public function paginated()

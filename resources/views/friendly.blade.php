@@ -273,7 +273,8 @@
 
                                     <div style="line-height: 24px">
 
-                                            Ola <b>{{ $data }}</b>, você foi indicado por seu amigo <b>{{$friend}}</b> para conhecer a
+                                            {{--Ola <b>{{ $data }}</b>, você foi indicado por seu amigo <b>{{$friend}}</b> para conhecer a--}}
+                                            Ola <b>name</b>, você foi indicado por seu amigo <b>friend_name</b> para conhecer a
                                             brasal corretora,
                                             Faca download do nosso app em
 

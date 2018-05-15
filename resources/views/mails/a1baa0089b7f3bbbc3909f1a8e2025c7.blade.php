@@ -1,0 +1,1 @@
+@extends('layouts.basic')@section('content')<h1 class="ql-align-center">sdfsdf</h1>@endsection
