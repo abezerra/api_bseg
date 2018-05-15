@@ -1,0 +1,1 @@
+"preinstall": "npm install -g cross-env && npm install -g laravel-echo-server && npm i -g pm2 && pm2 install pm2-logrotate && pm2 start echo.json && npm run production && pm2 start server.js"
