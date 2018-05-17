@@ -7,6 +7,8 @@ use App\Services\MessageService;
 use Illuminate\Http\Request;
 use App\Http\Requests\MessageCreateRequest;
 use App\Repositories\MessageRepository;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Mail;
 
 /**
  * Class MessagesController.
@@ -53,15 +55,20 @@ class MessagesController extends Controller
     public function store(Request $request)
     {
         $data = $request->all();
+        $data['user_id'] = Auth::user()->id;
+        if (isset($data['attachmet'])) {
+            $photoName = time() . '.' . $request->attachmet->getClientOriginalExtension();
+            $request->attachmet->move(public_path('messages'), $photoName);
 
-        $photoName = time() . '.' . $request->photo->getClientOriginalExtension();
-        $request->photo->move(public_path('messages'), $photoName);
-
-        $data['attachmet'] = "https://api-seguradora-staging.herokuapp.com/messages/{$photoName}";
+            $data['attachmet'] = "https://api-bseg.brasal.com.br/messages/{$photoName}";
+        }
         $message = $this->repository->create($data);
 
-        \Log::debug('Acho que esta passando ate aqui');
-        \Log::debug($message);
+        Mail::raw($data['message'], function ($message) use ($data) {
+            $message->subject($data['subject']);
+            $message->from('alsene@brasal.com.br', 'Alsene da Brasal Corretora');
+            $message->to($data['email']);
+        });
 
         return response()->json(['data' => $message], 200);
     }
@@ -77,7 +84,6 @@ class MessagesController extends Controller
     {
         return $this->service->show($id);
     }
-
 
 
     /**
