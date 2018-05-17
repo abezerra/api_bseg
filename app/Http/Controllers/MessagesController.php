@@ -65,12 +65,12 @@ class MessagesController extends Controller
         $message = $this->repository->create($data);
 
         Mail::raw($data['message'], function ($message) use ($data) {
-            $message->subject($data['subject']);
-            $message->from('alsene@brasal.com.br', 'Alsene da Brasal Corretora');
+            $message->subject($data['name'] . ' - '  . $data['subject']);
+            $message->from('sistemas@brasal.com.br', 'Alsene da Brasal Corretora');
             $message->to('galima@brasal.com.br');
         });
 
-        return response()->json(['data' => $message], 200);
+        return response()->json($message, 200);
     }
 
     /**
