@@ -67,7 +67,7 @@ class MessagesController extends Controller
         Mail::raw($data['message'], function ($message) use ($data) {
             $message->subject($data['subject']);
             $message->from('alsene@brasal.com.br', 'Alsene da Brasal Corretora');
-            $message->to('guaracyaraujolima@gmail.com');
+            $message->to('galima@brasal.com.br');
         });
 
         return response()->json(['data' => $message], 200);
