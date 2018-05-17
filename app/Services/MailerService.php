@@ -53,7 +53,7 @@ class MailerService
         try {
             Mail::send(('friendly'), ["data" => $data['name'], "friend" => $data['i']], function ($message) use ($data){
                 $message->subject('Bem vindo á Brasal Corretora');
-                $message->from('alsene@brasal.com.br', 'Alsene da Brasal Seguradora');
+                $message->from('alsene@brasal.com.br', 'Alsene da Brasal Corretora');
                 $message->to($data['email']);
             });
 
