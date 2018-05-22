@@ -9,6 +9,7 @@
 namespace App\Services;
 
 
+use App\Entities\User;
 use App\Notifications\PushToAll;
 use App\Repositories\NotificationRepository;
 use App\Validators\NotificationValidator;
@@ -154,5 +155,12 @@ class NotificationService
     public function push_notification()
     {
 
+    }
+
+    public function notify_employer_to_meta($id)
+    {
+        $user = User::where('id', $id)->get();
+        $user->toArray();
+        return $user;
     }
 }
