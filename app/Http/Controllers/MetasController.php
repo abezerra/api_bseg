@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Entities\Meta;
 use App\Services\NotificationService;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
@@ -80,6 +82,7 @@ class MetasController extends Controller
 
             $this->validator->with($request->all())->passesOrFail(ValidatorInterface::RULE_CREATE);
             $data['created_by'] = Auth::user()->id;
+            $data['production_percentage'] = Auth::user()->id;
             $metum = $this->repository->create($data);
             //dd($this->notificationService->notify_employer_to_meta($data['employer_id']));
             $response = [
@@ -161,5 +164,51 @@ class MetasController extends Controller
             'message' => 'Meta deleted.',
             'deleted' => $deleted,
         ]);
+    }
+
+    public function mymeta($id)
+    {
+        $date = Carbon::now();
+
+        $month = $date->month < 10 ? '0' . $date->month : $date->month;
+        $day = $date->day < 10 ? '0' . $date->day : $date->day;
+        $k = $day . '/' . $month . '/' . $date->year;
+
+        $daily = Meta::with(['employer', 'user'])->where('employer_id', '=', $id)->where('day', '=', $k)->get()->toArray();
+
+        return response()->json([
+            'daily' => $daily,
+            //'weekly' => $this->repository->with(['employer', 'user'])->findByField('employer_id', $id),
+            'weekly' => $this->weekly_ranking()
+
+        ]);
+    }
+
+    public function daily($id)
+    {
+        $date = Carbon::now();
+
+        $month = $date->month < 10 ? '0' . $date->month : $date->month;
+        $day = $date->day < 10 ? '0' . $date->day : $date->day;
+        $k = $day . '/' . $month . '/' . $date->year;
+
+        return (Meta::with(['employer', 'user'])->where('employer_id', '=', $id)->where('day', '=', $k)->get())->toArray();
+    }
+
+    public function weekly_ranking()
+    {
+        $start_week = Carbon::parse(Carbon::now())->startOfWeek();
+        $start = ($start_week->day < 10 ? '0' . $start_week->day : $start_week->day) . '/'
+            . ($start_week->month < 10 ? '0' . $start_week->month : $start_week->month)
+            . '/' . $start_week->year;
+
+        $end_week = Carbon::parse(Carbon::now())->endOfWeek();
+        $end = (($end_week->day < 10 ? '0' . $end_week->day : $end_week->day) - 2) . '/'
+            . ($end_week->month < 10 ? '0' . $end_week->month : $end_week->month)
+            . '/' . $end_week->year;
+
+        return (Meta::with(['employer', 'user'])->whereBetween('day', [$start, $end])->limit(5)->get())->toArray();
+
+
     }
 }

@@ -250,12 +250,18 @@ Route::group(['middleware' => ['cors']], function () {
 
         Route::group(['prefix' => 'metas'], function () {
             Route::get('', 'MetasController@index');
+            Route::get('/daily/{id}', 'MetasController@daily');
             Route::get('/paginated', 'MetasController@paginated');
+            Route::get('/weekly_ranking', 'MetasController@weekly_ranking');
             Route::post('', 'MetasController@store');
             Route::get('/{id}', 'MetasController@show');
+            Route::get('/mymeta/{id}', 'MetasController@mymeta');
             Route::delete('/{id}', 'MetasController@destroy');
+        });
+
+        Route::group(['prefix' => 'parsing'], function () {
+            Route::post('', 'PdfParser@store');
         });
 
     });
 });
-
