@@ -231,6 +231,7 @@ Route::group(['middleware' => ['cors']], function () {
             Route::delete('/lists/{id}', 'MailerListsController@destroy');
 
         });
+        Route::get('maiu/templates', 'MailerTemplatesController@index');
         Route::get('maiu/listas', 'MailerListsController@index');
 
         Route::group(['prefix' => 'text_messages'], function () {

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Extractor\BradescoAutoResidencial;
 use Illuminate\Http\Request;
 
 class PdfParser extends Controller
@@ -29,53 +30,32 @@ class PdfParser extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
 
     public function store(Request $request)
     {
+        $data = $request->all();
         // 1º - receber o arquivo PDF e salvar em algum buraco
         $file_named = md5(time() . rand(0, 666));
-         $renamed_file = $file_named . '.' . request()->policy->getClientOriginalExtension();
+        $renamed_file = $file_named . '.' . request()->policy->getClientOriginalExtension();
         request()->policy->move(public_path('policies_pdf'), $renamed_file);
 
         $filename = public_path('policies_pdf/') . $renamed_file;
+
         //2º - parsear os PDF pra HTML
 
-        $command = 'pdf2htmlEX ' . $filename . ' --dest-dir policies_html';
+        $page_start = $data['page_start'];
+        $page_end = $data['page_end'];
+
+        $command = 'pdf2htmlEX ' . ' -f ' . $page_start . ' -l ' . $page_end . ' ' . $filename . ' --dest-dir policies_html';
         shell_exec($command);
 
         //3º - Buscar as paradas no arquivo html
 
-        \phpQuery::newDocumentFileHTML(public_path('policies_html/' . $file_named . '.html'));
+        $k = \phpQuery::newDocumentFileHTML(public_path('policies_html/' . $file_named . '.html'));
 
-        //$titleElement = pq('.y12:first');
-        //$titleElement = pq('.y64:first');
-        $titleElement = pq('div:contains(Marca/Tipo Veículo)');
-        $title = $titleElement->html();
-        echo '<h2>Seguradora:</h2>';
-        echo  $title;
-
-        $titleElement = pq('.y44:last');
-        $title = $titleElement->html();
-        echo '<h2>Apolice:</h2>';
-        echo  $title;
-
-        $titleElement = pq('.y49:last ');
-        $title = $titleElement->html();
-        echo '<h2>Marca / Modelo:</h2>';
-        echo  $title;
-
-        $titleElement = pq('.y9a');
-        $title = $titleElement->html();
-        echo '<h2>Combustivel:</h2>';
-        echo '<p>' . htmlentities( $title) . '</p>';
-
-        $titleElement = pq('.y8c:first ');
-        $title = $titleElement->html();
-        echo '<h2>Segurado:</h2>';
-        echo  $title;
     }
 
 
@@ -83,7 +63,7 @@ class PdfParser extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
 //    public function store()
@@ -122,7 +102,7 @@ class PdfParser extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
     public function edit($id)
@@ -133,8 +113,8 @@ class PdfParser extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param  \Illuminate\Http\Request $request
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id)
@@ -145,7 +125,7 @@ class PdfParser extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
     public function destroy($id)
