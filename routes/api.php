@@ -116,6 +116,7 @@ Route::group(['middleware' => ['cors']], function () {
         //insurers
         Route::group(['prefix' => 'insurers'], function () {
             Route::get('', 'InsurersController@index');
+            Route::get('/paginated', 'InsurersController@paginated');
             Route::get('/my/{id}', 'InsurersController@my_alerts');
             Route::post('', 'InsurersController@store');
             Route::get('/{id}', 'InsurersController@show');

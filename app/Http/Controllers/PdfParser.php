@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use Extractor\BradescoAutoResidencial;
 use Illuminate\Http\Request;
 
 class PdfParser extends Controller
@@ -45,7 +44,6 @@ class PdfParser extends Controller
         $filename = public_path('policies_pdf/') . $renamed_file;
 
         //2º - parsear os PDF pra HTML
-
         $page_start = $data['page_start'];
         $page_end = $data['page_end'];
 
@@ -55,6 +53,9 @@ class PdfParser extends Controller
         //3º - Buscar as paradas no arquivo html
 
         $k = \phpQuery::newDocumentFileHTML(public_path('policies_html/' . $file_named . '.html'));
+        $bradesco_auto = new BradescoAutoResidencial();
+
+        $bradesco_auto->auto_residential($k);
 
     }
 

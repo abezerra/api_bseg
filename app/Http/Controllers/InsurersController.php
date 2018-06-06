@@ -42,6 +42,11 @@ class InsurersController extends Controller
         return $this->service->index();
     }
 
+    public function paginated()
+    {
+        return $this->service->paginated();
+    }
+
     /**
      * Store a newly created resource in storage.
      *
