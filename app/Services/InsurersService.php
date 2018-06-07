@@ -35,6 +35,11 @@ class InsurersService
         return $this->repository->all();
     }
 
+    public function paginated()
+    {
+        return $this->repository->paginate(5);
+    }
+
     public function store(array $data)
     {
         try {

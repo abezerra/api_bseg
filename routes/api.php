@@ -28,6 +28,8 @@ Route::group(['middleware' => ['cors']], function () {
         });
 
         Route::get('details/{cpf}', 'AuthController@details');
+
+        Route::get('employers', 'AuthController@users');
         Route::post('invite', 'FiendsController@invite');
 //        Route::get('user_responsible_of_news_clients', 'UsersController@user_responsible_of_news_clients');
 //        Route::post('user_add', 'UsersController@create_new');
@@ -114,6 +116,7 @@ Route::group(['middleware' => ['cors']], function () {
         //insurers
         Route::group(['prefix' => 'insurers'], function () {
             Route::get('', 'InsurersController@index');
+            Route::get('/paginated', 'InsurersController@paginated');
             Route::get('/my/{id}', 'InsurersController@my_alerts');
             Route::post('', 'InsurersController@store');
             Route::get('/{id}', 'InsurersController@show');
@@ -229,7 +232,9 @@ Route::group(['middleware' => ['cors']], function () {
             Route::delete('/lists/{id}', 'MailerListsController@destroy');
 
         });
+        Route::get('maiu/templates', 'MailerTemplatesController@index');
         Route::get('maiu/listas', 'MailerListsController@index');
+
         Route::group(['prefix' => 'text_messages'], function () {
             Route::get('/templates', 'SMSTemplatesController@index');
             Route::get('/templates/paginated', 'SMSTemplatesController@paginated');
@@ -243,9 +248,22 @@ Route::group(['middleware' => ['cors']], function () {
             Route::get('/lists/{id}', 'SMSListsController@show');
             Route::put('/lists/{id}', 'SMSListsController@update');
             Route::delete('/lists/{id}', 'SMSListsController@destroy');
+        });
 
+        Route::group(['prefix' => 'metas'], function () {
+            Route::get('', 'MetasController@index');
+            Route::get('/daily/{id}', 'MetasController@daily');
+            Route::get('/paginated', 'MetasController@paginated');
+            Route::get('/weekly_ranking', 'MetasController@weekly_ranking');
+            Route::post('', 'MetasController@store');
+            Route::get('/{id}', 'MetasController@show');
+            Route::get('/mymeta/{id}', 'MetasController@mymeta');
+            Route::delete('/{id}', 'MetasController@destroy');
+        });
+
+        Route::group(['prefix' => 'parsing'], function () {
+            Route::post('', 'PdfParser@store');
         });
 
     });
 });
-

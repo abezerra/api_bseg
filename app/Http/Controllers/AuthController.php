@@ -48,4 +48,9 @@ class AuthController extends Controller
         ]);
     }
 
+    public function users()
+    {
+        return response()->json((User::with(['meta'])->where('role', '!=', 'client')->get())->toArray(), 200);
+    }
+
 }

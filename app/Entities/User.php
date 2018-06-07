@@ -121,4 +121,14 @@ class User extends Authenticatable
     {
         return $this->hasMany(MailerListParticipant::class, 'created_by');
     }
+
+    public function meta()
+    {
+        return $this->hasMany(Meta::class, 'employer_id');
+    }
+
+    public function meta_register()
+    {
+        return $this->hasMany(Meta::class, 'created_by');
+    }
 }

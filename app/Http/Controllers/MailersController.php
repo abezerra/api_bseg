@@ -96,6 +96,7 @@ class MailersController extends Controller
 
 
             }
+
         } catch (ValidationException $exception) {
             return [
                 'error' => true,

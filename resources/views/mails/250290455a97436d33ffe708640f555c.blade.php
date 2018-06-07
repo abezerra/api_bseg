@@ -1,0 +1,1 @@
+@extends('layouts.basic')@section('content')<p>sdfgsdfg</p>@endsection
