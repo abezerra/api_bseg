@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Controllers\Seguradoras\LibertyAuto;
+use App\Http\Controllers\Seguradoras\SulAmericaAuto;
 use Illuminate\Http\Request;
 
 class PdfParser extends Controller
@@ -53,9 +55,33 @@ class PdfParser extends Controller
         //3º - Buscar as paradas no arquivo html
 
         $k = \phpQuery::newDocumentFileHTML(public_path('policies_html/' . $file_named . '.html'));
-        $bradesco_auto = new BradescoAutoResidencial();
 
-        $bradesco_auto->auto_residential($k);
+        $bradesco_auto = new BradescoAutoResidencial();
+        $sulamerica_auto = new SulAmericaAuto();
+        $liberty_auto = new LibertyAuto();
+
+
+        switch ($data['insurer_id']):
+
+            case 1:
+                $bradesco_auto->auto_residential($k);
+            break;
+
+            case 2:
+                $sulamerica_auto->auto_simples($k);
+            break;
+
+            case 3:
+                #return
+                    $liberty_auto->by_title($k);
+            break;
+
+            default;
+
+        endswitch;
+
+
+
 
     }
 
