@@ -18,6 +18,15 @@ class BradescoAutoResidencial extends Controller
 
     }
 
+    public function repartidor($k)
+    {
+        $data = [];
+        $data['saida_consesionaria'] = pq($k)->find("#pf7 div:eq(28)")->text();
+
+        //$month = $data['saida_consesionaria'] < 10 ? '0' . $date->month : $date->month;
+
+    }
+
     public function auto_residential($k)
     {
 
@@ -58,9 +67,10 @@ class BradescoAutoResidencial extends Controller
         $c_seg['cobertura_18_a_25'] = pq($k)->find("#pf6 div:eq(47)")->text();
         $c_seg['condominio_garagem'] = pq($k)->find("#pf6 div:eq(50)")->text() . ' ' . pq($k)->find("#pf6 div:eq(51)")->text();
 
-        //Ta quebrando aqui
+        $c_seg['Ta quebrando aqui'] = '###############################################';
 
         $c_seg['mais_de_um_veiculo'] = pq($k)->find("#pf7 div:eq(4)")->text();
+
         $c_seg['principal_atividade_do_condutor'] = pq($k)->find("#pf7 div:eq(7)")->text();
         $c_seg['utilia_veiculo_pra_ir_pro_rala'] = pq($k)->find("#pf7 div:eq(9)")->text();
         $c_seg['quilometragem_media_rodada'] = pq($k)->find("#pf7 div:eq(15)")->text();
@@ -77,7 +87,9 @@ class BradescoAutoResidencial extends Controller
         $c_seg['tipo_do_veiculo'] = pq($k)->find("#pf7 div:eq(36)")->text();
 
         $c_seg['combustivel'] = pq($k)->find("#pf7 div:eq(38)")->text();
-        $c_seg['quantidade_portas'] = substr(pq($k)->find("#pf7 div:eq(40)")->text(), 0, 2);
+
+        $c_seg['quantidade_portas'] = pq($k)->find("#pf7 div:eq(4)")->text();
+
         $c_seg['quantidade_eoxos'] = substr(pq($k)->find("#pf7 div:eq(40)")->text(), 2, 4);
         $c_seg['lotacao'] = substr(pq($k)->find("#pf7 div:eq(40)")->text(), 5);
         $c_seg['transformado'] = pq($k)->find("#pf7 div:eq(42)")->text();
@@ -178,4 +190,5 @@ class BradescoAutoResidencial extends Controller
         $nome_da_seguradora = pq($k)->find("#pfa div:eq(7)");
         echo '<br /><br /> Susepe: ' . $nome_da_seguradora->text();
     }
+
 }

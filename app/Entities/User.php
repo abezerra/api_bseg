@@ -20,7 +20,8 @@ class User extends Authenticatable
         'email', 
         'password',
         'cpf',
-        'role'
+        'role',
+        'player_id'
     ];
 
     /**
