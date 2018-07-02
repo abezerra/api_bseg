@@ -19,6 +19,7 @@ class UsersTableSeeder extends Seeder
             'password' => bcrypt(123456),
             'role' => 'manager',
             'cpf' => '03676459393',
+            'player_id' => '7e035d6b-d4e1-4d29-8a15-00a7c2f2c4df',
             'remember_token' => str_random(10)]);
 
 
@@ -28,6 +29,7 @@ class UsersTableSeeder extends Seeder
             'password' => bcrypt(123456),
             'role' => 'news',
             'cpf' => rand(1, 999) . rand(1, 999) . rand(1, 999) . rand(1, 99),
+            'player_id' => '7e035d6b-d4e1-4d29-8a15-00a7c2f2c4df',
             'remember_token' => str_random(10)]);
 
 
@@ -37,6 +39,7 @@ class UsersTableSeeder extends Seeder
             'password' => bcrypt(123456),
             'role' => 'healt',
             'cpf' => rand(1, 999) . rand(1, 999) . rand(1, 999) . rand(1, 99),
+            'player_id' => '7e035d6b-d4e1-4d29-8a15-00a7c2f2c4df',
             'remember_token' => str_random(10)]);
 
 
@@ -46,6 +49,7 @@ class UsersTableSeeder extends Seeder
             'password' => bcrypt(123456),
             'role' => 'enterprise',
             'cpf' => rand(1, 999) . rand(1, 999) . rand(1, 999) . rand(1, 99),
+            'player_id' => '7e035d6b-d4e1-4d29-8a15-00a7c2f2c4df',
             'remember_token' => str_random(10)]);
 
 
@@ -55,6 +59,7 @@ class UsersTableSeeder extends Seeder
             'password' => bcrypt(123456),
             'role' => 'cr',
             'cpf' => rand(1, 999) . rand(1, 999) . rand(1, 999) . rand(1, 99),
+            'player_id' => '7e035d6b-d4e1-4d29-8a15-00a7c2f2c4df',
             'remember_token' => str_random(10)]);
 
         factory(\App\Entities\User::class)->create([
@@ -63,6 +68,7 @@ class UsersTableSeeder extends Seeder
             'password' => bcrypt(123456),
             'role' => 'collaborator',
             'cpf' => rand(1, 999) . rand(1, 999) . rand(1, 999) . rand(1, 99),
+            'player_id' => '7e035d6b-d4e1-4d29-8a15-00a7c2f2c4df',
             'remember_token' => str_random(10)]);
     }
 }
