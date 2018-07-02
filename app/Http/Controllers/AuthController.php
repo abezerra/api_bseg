@@ -53,4 +53,11 @@ class AuthController extends Controller
         return response()->json((User::with(['meta'])->where('role', '!=', 'client')->get())->toArray(), 200);
     }
 
+    public function set_playerid(Request $request)
+    {
+        $data = $request->all();
+        dd($data);
+        return User::where('id', Auth::user()->id)->update(['player_id' => $data['user_id']]);
+    }
+
 }

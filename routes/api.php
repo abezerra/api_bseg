@@ -28,12 +28,10 @@ Route::group(['middleware' => ['cors']], function () {
         });
 
         Route::get('details/{cpf}', 'AuthController@details');
+        Route::post('playerid', 'AuthController@set_playerid');
 
         Route::get('employers', 'AuthController@users');
         Route::post('invite', 'FiendsController@invite');
-//        Route::get('user_responsible_of_news_clients', 'UsersController@user_responsible_of_news_clients');
-//        Route::post('user_add', 'UsersController@create_new');
-//        Route::get('notification', 'NotificationsController@index');
 
         Route::group(['prefix' => 'clients'], function () {
             Route::get('', 'ClientsController@index');
