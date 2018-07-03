@@ -24,3 +24,4 @@ $factory->define(App\Entities\User::class, function (Faker $faker) {
         'role' => 'client'
     ];
 });
+
