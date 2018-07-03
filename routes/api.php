@@ -29,7 +29,7 @@ Route::group(['middleware' => ['cors']], function () {
 
         Route::get('details/{cpf}', 'AuthController@details');
         Route::get('hasplayerid/{id}', 'AuthController@hasplayer_id');
-        Route::post('playerid/{id}', 'AuthController@set_playerid');
+        Route::put('playerid/{id}', 'AuthController@set_playerid');
 
         Route::get('employers', 'AuthController@users');
         Route::post('invite', 'FiendsController@invite');
