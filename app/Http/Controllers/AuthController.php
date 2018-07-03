@@ -62,7 +62,7 @@ class AuthController extends Controller
     {
         $data = $request->all();
         \Log::info($data);
-        return User::where('id', Auth::user()->id)->update(['player_id' => $data['user_id']]);
+        return User::where('id', Auth::user()->id)->update(['player_id' => $data['player_id']]);
     }
 
 }
