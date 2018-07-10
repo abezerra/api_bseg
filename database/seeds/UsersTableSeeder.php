@@ -22,6 +22,15 @@ class UsersTableSeeder extends Seeder
             'player_id' => '7e035d6b-d4e1-4d29-8a15-00a7c2f2c4df',
             'remember_token' => str_random(10)]);
 
+        factory(\App\Entities\User::class)->create([
+            'name' => 'Manager',
+            'email' => 'manager@bseg.com',
+            'password' => bcrypt(123456),
+            'role' => 'manager',
+            'cpf' => rand(1, 999) . rand(1, 999) . rand(1, 999) . rand(1, 99),
+            'player_id' => '7e035d6b-d4e1-4d29-8a15-00a7c2f2c4df',
+            'remember_token' => str_random(10)]);
+
 
         factory(\App\Entities\User::class)->create([
             'name' => 'News Clients Department',

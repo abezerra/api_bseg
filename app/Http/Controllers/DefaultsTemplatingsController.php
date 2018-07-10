@@ -75,9 +75,9 @@ class DefaultsTemplatingsController extends Controller
 
 
             $data['media_name'] = $file_name;
-            $data['media_url'] = 'http://127.0.0.1:8000/images/' . $file_name;
+            $data['media_url'] =   env('APP_URL') . '/images'  . '/'. $file_name;
             $data['status'] = 'active';
-            $data['created_by'] = 11;
+            $data['created_by'] = \Auth::user()->id;
 
             $defaultsTemplating = $this->repository->create($data);
 
