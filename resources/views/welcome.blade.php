@@ -92,7 +92,7 @@
     </div>
 </div>
 {{--<script src="http://localhost:6001/socket.io/socket.io.js"></script>--}}
-<script src="http://apibseg.brasal.com.br:6001/socket.io/socket.io.js"></script>
+<script src="https://apibseg.brasal.com.br:6001/socket.io/socket.io.js"></script>
 <script src="{{ asset('js/app.js')}}"></script>
 </body>
 </html>
