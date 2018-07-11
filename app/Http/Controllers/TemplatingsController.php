@@ -250,7 +250,7 @@ class TemplatingsController extends Controller
         $data['user_id'] = 11;
 
         return [
-            'path' => 'https://api-bseg.brasal.com.br/img/' . $imageName
+            'path' => env('APP_URL') . '/img/' . $imageName
         ];
 
     }
