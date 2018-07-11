@@ -246,7 +246,7 @@ class TemplatingsController extends Controller
         $imageName = md5('brasalimg') . '.jpg';
         $img->save(public_path('img/' . $imageName));
 
-        $data['media_name'] = "https://api-bseg.brasal.com.br/img/{$imageName}";
+        $data['media_name'] = env('APP_URL') . "/img/{$imageName}";
         $data['user_id'] = 11;
 
         return [
