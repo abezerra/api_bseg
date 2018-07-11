@@ -250,7 +250,7 @@ class TemplatingsController extends Controller
         $data['user_id'] = 11;
 
         return [
-            'path' => env('APP_URL') . '/img/' . $imageName
+            'path' => env('APP_URL') . 'img/' . $imageName
         ];
 
     }
