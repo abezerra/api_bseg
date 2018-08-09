@@ -58,7 +58,7 @@ class MetasController extends Controller
      */
     public function index()
     {
-        return response()->json($this->repository->all(), 200);
+        return response()->json($this->repository->with(['employer', 'insurance', 'user'])->all(), 200);
     }
 
     public function paginated()
@@ -176,20 +176,24 @@ class MetasController extends Controller
 
     public function mymeta($id)
     {
+
         $date = Carbon::now();
 
         $month = $date->month < 10 ? '0' . $date->month : $date->month;
         $day = $date->day < 10 ? '0' . $date->day : $date->day;
         $k = $day . '/' . $month . '/' . $date->year;
 
-        $daily = Meta::with(['employer', 'user'])->where('employer_id', '=', $id)->where('day', '=', $k)->get()->toArray();
+        //$daily = Meta::with(['employer', 'user'])->where('employer_id', '=', $id)->where('day', '=', $k)->get()->toArray();
+        $daily = Meta::with(['employer', 'user', 'insurance'])->where('employer_id', '=', $id)->get()->toArray();
 
-        return response()->json([
-            'daily' => $daily,
-            //'weekly' => $this->repository->with(['employer', 'user'])->findByField('employer_id', $id),
-            'weekly' => $this->weekly_ranking()
+        // return response()->json([
+        //     'daily' => $daily,
+        //     //'weekly' => $this->repository->with(['employer', 'user'])->findByField('employer_id', $id),
+        //     'weekly' => $this->weekly_ranking()
 
-        ]);
+        // ]);
+
+        return response()->json($daily, 201);
     }
 
     public function daily($id)
