@@ -63,7 +63,7 @@ class MetasController extends Controller
 
     public function paginated()
     {
-        return response()->json($this->repository->with(['employer'])->paginate(5), 200);
+        return response()->json($this->repository->with(['employer', 'insurance', 'user'])->paginate(5), 200);
     }
 
     /**
@@ -80,14 +80,22 @@ class MetasController extends Controller
         $data = $request->all();
         try {
 
-            $this->validator->with($request->all())->passesOrFail(ValidatorInterface::RULE_CREATE);
-            $data['created_by'] = Auth::user()->id;
-            $data['production_percentage'] = Auth::user()->id;
-            $metum = $this->repository->create($data);
-            //dd($this->notificationService->notify_employer_to_meta($data['employer_id']));
+            for ($i = 0; $i < count($data['metaArray']); ++$i) {
+                $cunaho = Meta::create([
+                    'description' => $data['metaArray'][$i]['description'],
+                    'month' => $data['metaArray'][$i]['month'],
+                    'daily_sales' => $data['metaArray'][$i]['daily_sales'],
+                    'employer_id' => $data['metaArray'][$i]['employer_id'],
+                    'created_by' => Auth::user()->id,
+                    'insurance_type_id' => $data['metaArray'][$i]['insurance_type_id'],
+                ]);
+
+                \Log::info($cunaho);
+            }
+
             $response = [
                 'message' => 'Meta created.',
-                'data' => $metum->toArray(),
+                'data' => $cunaho,
             ];
             return response()->json($response);
         } catch (ValidatorException $e) {

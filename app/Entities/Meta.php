@@ -21,13 +21,19 @@ class Meta extends Model implements Transformable
      * @var array
      */
     protected $fillable = [
+        // 'description',
+        // 'production_meta',
+        // 'production_real',
+        // 'production_percentage',
+        // 'day',
+        // 'employer_id',
+        // 'created_by',
         'description',
-        'production_meta',
-        'production_real',
-        'production_percentage',
-        'day',
+        'month',
+        'daily_sales',
         'employer_id',
         'created_by',
+        'insurance_type_id',
     ];
 
     public function employer()
@@ -39,6 +45,11 @@ class Meta extends Model implements Transformable
     public function user()
     {
         return $this->belongsTo(User::class, 'created_by');
+    }
+
+    public function insurance()
+    {
+        return $this->belongsTo(InsuranceType::class, 'insurance_type_id');
     }
 
 }

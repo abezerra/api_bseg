@@ -24,4 +24,9 @@ class InsuranceType extends Model implements Transformable
         'description'
     ];
 
+    public function meta()
+    {
+        return $this->hasMany(Meta::class, 'insurance_type_id');
+    }
+
 }

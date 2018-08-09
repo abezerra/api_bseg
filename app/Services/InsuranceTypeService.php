@@ -30,6 +30,7 @@ class InsuranceTypeService
     /**
      * @var CoverageService
      */
+
     private $coverageService;
     /**
      * @var NotificationService
@@ -51,7 +52,17 @@ class InsuranceTypeService
 
     public function index()
     {
+        return $this->repository->all();
+    }
+    
+    public function paginated()
+    {
         return $this->repository->paginate(5);
+    }
+
+    public function save(array $data)
+    {
+        return $this->repository->create($data);
     }
 
     public function store(array $data)
