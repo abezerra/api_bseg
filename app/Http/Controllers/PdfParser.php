@@ -53,8 +53,11 @@ class PdfParser extends Controller
         shell_exec($command);
 
         //3º - Buscar as paradas no arquivo html
-
-         return 'http://127.0.0.1:8000/' . 'policies_html/' . $file_named . '.html';
+        $url = 'http://127.0.0.1:8000/' . 'policies_html/' . $file_named . '.html';
+        return response()->json($url, 200);
+        //  return [
+        //      'url' => $url
+        //  ];
         #\phpQuery::newDocumentFileHTML(public_path('policies_html/' . $file_named . '.html'));
 
 //        $bradesco_auto = new BradescoAutoResidencial();

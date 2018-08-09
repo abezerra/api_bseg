@@ -11,8 +11,7 @@ use Illuminate\Http\Request;
 | routes are loaded by the RouteServiceProvider within a group which
 | is assigned the "api" middleware group. Enjoy building your API!
 |
-*/
-
+ */
 
 Route::get('dp', 'DepartamentsController@index')->middleware('auth:api');
 
@@ -34,6 +33,21 @@ Route::group(['middleware' => ['cors']], function () {
         Route::get('employers', 'AuthController@users');
         Route::post('invite', 'FiendsController@invite');
 
+        Route::group(['prefix' => 'assets'], function () {
+            Route::get('/insurance_type', 'InsuranceTypesController@index');
+            Route::get('/insurance_type/paginated', 'InsuranceTypesController@paginated');
+            Route::post('/insurance_type', 'InsuranceTypesController@store');
+            Route::get('/insurance_type/{id}', 'InsuranceTypesController@show');
+            Route::put('/insurance_type/{id}', 'InsuranceTypesController@update');
+            Route::delete('/insurance_type/{id}', 'InsuranceTypesController@destroy');
+
+            Route::get('/employers', 'EmployersController@index');
+            Route::post('/employers', 'EmployersController@store');
+            Route::get('/employers/{id}', 'EmployersController@show');
+            Route::put('/employers/{id}', 'EmployersController@update');
+            Route::delete('/employers/{id}', 'EmployersController@destroy');
+        });
+
         Route::group(['prefix' => 'clients'], function () {
             Route::get('', 'ClientsController@index');
             Route::get('/conversations/{id}', 'ClientsController@show');
@@ -53,7 +67,6 @@ Route::group(['middleware' => ['cors']], function () {
             Route::put('/{id}', 'AlertsController@update');
             Route::delete('/{id}', 'AlertsController@destroy');
         });
-
 
         Route::group(['prefix' => 'notifications'], function () {
             Route::get('/{cpf}', 'NotificationsController@index');
@@ -123,7 +136,6 @@ Route::group(['middleware' => ['cors']], function () {
             Route::delete('/{id}', 'InsurersController@destroy');
         });
 
-
         Route::group(['prefix' => 'broker'], function () {
             Route::get('', 'BrokersController@index');
             Route::post('', 'BrokersController@store');
@@ -136,7 +148,6 @@ Route::group(['middleware' => ['cors']], function () {
             Route::delete('/departament/{id}', 'DepartamentsController@destroy');
         });
 
-
         Route::group(['prefix' => 'departaments'], function () {
             Route::get('', 'DepartamentsController@index');
             Route::get('/my/{id}', 'DepartamentsController@my_alerts');
@@ -145,7 +156,6 @@ Route::group(['middleware' => ['cors']], function () {
             Route::put('/{id}', 'DepartamentsController@update');
             Route::delete('/{id}', 'DepartamentsController@destroy');
         });
-
 
         Route::group(['prefix' => 'friend'], function () {
             Route::get('', 'FiendsController@index');

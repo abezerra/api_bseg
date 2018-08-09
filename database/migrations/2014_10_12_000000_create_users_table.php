@@ -20,7 +20,7 @@ class CreateUsersTable extends Migration
             $table->string('password', 100);
             $table->string('cpf', 20);
             $table->string('role', 80)->default('client');
-            $table->string('player_id', 80);
+            $table->string('player_id', 80)->default('0');
             $table->rememberToken();
             $table->timestamps();
         });

@@ -15,7 +15,7 @@ class UsersTableSeeder extends Seeder
 
         factory(\App\Entities\User::class)->create([
             'name' => 'Root',
-            'email' => 'root@bseg.com',
+            'email' => 'root@user.com',
             'password' => bcrypt(123456),
             'role' => 'manager',
             'cpf' => '03676459393',
@@ -24,7 +24,7 @@ class UsersTableSeeder extends Seeder
 
         factory(\App\Entities\User::class)->create([
             'name' => 'Manager',
-            'email' => 'manager@bseg.com',
+            'email' => 'manager@user.com',
             'password' => bcrypt(123456),
             'role' => 'manager',
             'cpf' => rand(1, 999) . rand(1, 999) . rand(1, 999) . rand(1, 99),
@@ -34,7 +34,7 @@ class UsersTableSeeder extends Seeder
 
         factory(\App\Entities\User::class)->create([
             'name' => 'News Clients Department',
-            'email' => 'newsclient@bseg.com',
+            'email' => 'newsclient@user.com',
             'password' => bcrypt(123456),
             'role' => 'news',
             'cpf' => rand(1, 999) . rand(1, 999) . rand(1, 999) . rand(1, 99),
@@ -44,7 +44,7 @@ class UsersTableSeeder extends Seeder
 
         factory(\App\Entities\User::class)->create([
             'name' => 'Healt Departament',
-            'email' => 'healt@bseg.com',
+            'email' => 'healt@user.com',
             'password' => bcrypt(123456),
             'role' => 'healt',
             'cpf' => rand(1, 999) . rand(1, 999) . rand(1, 999) . rand(1, 99),
@@ -54,7 +54,7 @@ class UsersTableSeeder extends Seeder
 
         factory(\App\Entities\User::class)->create([
             'name' => 'Eterprise Departament',
-            'email' => 'enterprise@bseg.com',
+            'email' => 'enterprise@user.com',
             'password' => bcrypt(123456),
             'role' => 'enterprise',
             'cpf' => rand(1, 999) . rand(1, 999) . rand(1, 999) . rand(1, 99),
@@ -64,7 +64,7 @@ class UsersTableSeeder extends Seeder
 
         factory(\App\Entities\User::class)->create([
             'name' => 'Renovation Center',
-            'email' => 'renovationcenter@bseg.com',
+            'email' => 'renovationcenter@user.com',
             'password' => bcrypt(123456),
             'role' => 'cr',
             'cpf' => rand(1, 999) . rand(1, 999) . rand(1, 999) . rand(1, 99),
@@ -73,7 +73,7 @@ class UsersTableSeeder extends Seeder
 
         factory(\App\Entities\User::class)->create([
             'name' => 'Collaborator',
-            'email' => 'collaborator@bseg.com',
+            'email' => 'collaborator@user.com',
             'password' => bcrypt(123456),
             'role' => 'collaborator',
             'cpf' => rand(1, 999) . rand(1, 999) . rand(1, 999) . rand(1, 99),

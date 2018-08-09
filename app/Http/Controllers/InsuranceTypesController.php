@@ -40,6 +40,11 @@ class InsuranceTypesController extends Controller
     {
         return $this->service->index();
     }
+    
+    public function paginated()
+    {
+        return $this->service->paginated();
+    }
 
     /**
      * Store a newly created resource in storage.
@@ -52,7 +57,7 @@ class InsuranceTypesController extends Controller
      */
     public function store(Request $request)
     {
-        return $this->service->store($request->all());
+        return $this->service->save($request->all());
     }
 
     /**
